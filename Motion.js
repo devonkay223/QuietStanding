@@ -1,18 +1,17 @@
-const devicemotion = new DeviceMotionEvent("devicemotion")
+const devicemotion = new DeviceMotionEvent('devicemotion');
 
 if (window.DeviceMotionEvent) {
-    window.addEventListener('devicemotion', deviceMotionHandler);
-    // setTimeout(stopJump, 3 * 1000);
+    window.addEventListener('devicemotion', (event) => {
+        console.log(`${event.acceleration.x} m/s2`);
+      });
     console.log('supported');
   }
 else {
     console.log("not supported");
 }
 
-window.addEventListener('devicemotion', (event) => {
-    console.log(`${event.acceleration.x} m/s2`);
-  });
 
-function deviceMotionHandler(){
+
+function deviceMotionHandler(event){
    // do stuff here
 }
