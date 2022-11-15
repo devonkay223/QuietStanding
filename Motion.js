@@ -5,7 +5,7 @@ function getAccel(){
         if (response == 'granted') {
             window.addEventListener('devicemotion', (event) => {
                 dot = document.getElementsByClassName("indicatorDot")[0]
-                if(event.acceleration.x > 1) { 
+                if(event.acceleration.x > 0) { 
                     dot.setAttribute('style', "background-color:#4626e3");
                 }
                 if(event.acceleration.x == 0){
