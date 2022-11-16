@@ -1,18 +1,20 @@
 var updateRate = 1/60; // Sensor refresh rate
 
 function getAccel(){
+    console.log("getAccel");
     DeviceMotionEvent.requestPermission().then(response => {
         if (response == 'granted') {
             window.addEventListener('devicemotion', (event) => {
-                dot = document.getElementsByClassName("indicatorDot")[0]
+                body = document.getElementsByClassName("body")[0]
+                console.log(event.acceleration.x);
                 if(event.acceleration.x > 0) { 
-                    dot.setAttribute('style', "background-color:#4626e3");
+                    body.setAttribute('style', "background-color:#4626e3");
                 }
                 if(event.acceleration.x == 0){
-                    dot.setAttribute('style', "background-color:#9aff56");
+                    body.setAttribute('style', "background-color:#9aff56");
                 }
                 else {
-                    dot.setAttribute('style', "background-color:#ffab56");
+                    body.setAttribute('style', "background-color:#ffab56");
                 }
             });
             // Add a listener to get smartphone orientation 
