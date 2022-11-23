@@ -18,3 +18,9 @@ h2{
     border-radius: 50%;
     position:fixed;
 }
+
+canvas {
+    display: block;
+    background-color: #1f1f1f;
+    font-family: Rubik, Georgia, serif !important;
+  }

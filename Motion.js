@@ -1,52 +1,32 @@
-var updateRate = 1/60; // Sensor refresh rate
+var x, y, z;
 
-function getAccel(){
-    console.log("getAccel");
-    DeviceMotionEvent.requestPermission().then(response => {
-        if (response == 'granted') {
-            window.addEventListener('devicemotion', (event) => {
-                body = document.getElementsByClassName("body")[0]
-                console.log(event.acceleration.x);
-                if(event.acceleration.x > 0) { 
-                    body.setAttribute('style', "background-color:#4626e3");
-                }
-                if(event.acceleration.x == 0){
-                    body.setAttribute('style', "background-color:#9aff56");
-                }
-                else {
-                    body.setAttribute('style', "background-color:#ffab56");
-                }
-            });
-            // Add a listener to get smartphone orientation 
-           // in the alpha-beta-gamma axes (units in degrees)
-            window.addEventListener('deviceorientation',(event) => {
-                // Expose each orientation angle in a more readable way
-                // rotation_degrees = event.alpha;
-                // frontToBack_degrees = event.beta;
-                // leftToRight_degrees = event.gamma;
-                
-                // // Update velocity according to how tilted the phone is
-                // // Since phones are narrower than they are long, double the increase to the x velocity
-                // vx = vx + leftToRight_degrees * updateRate*2; 
-                // vy = vy + frontToBack_degrees * updateRate;
-                
-                // // Update position and clip it to bounds
-                // px = px + vx*.5;
-                // if (px > 98 || px < 0){ 
-                //     px = Math.max(0, Math.min(98, px)) // Clip px between 0-98
-                //     vx = 0;
-                // }
+function setup() 
+{
+  // set canvas size
+  createCanvas(400, 400);
+  frameRate(20);
 
-                // py = py + vy*.5;
-                // if (py > 98 || py < 0){
-                //     py = Math.max(0, Math.min(98, py)) // Clip py between 0-98
-                //     vy = 0;
-                // }
-                
-                // dot = document.getElementsByClassName("indicatorDot")[0]
-                // dot.setAttribute('style', "background-color:#4626e3");
-                
-            });
-        }
-    });
+  // default values
+  x = 0;
+  y = 0;
+  z = 0;
+}
+
+function draw() {
+    
+}
+
+//z accelerometer Data
+window.addEventListener('devicemotion', function(e) 
+{ 
+  x = parseFloat(e.acceleration.x).toFixed(3);
+  y = parseFloat(e.acceleration.y).toFixed(3);
+  z = parseFloat(e.acceleration.z).toFixed(3); 
+  
+  //gradient up to .15 for sound 
+  
+});
+
+function getPerm(){
+  DeviceMotionEvent.requestPermission()
 }
