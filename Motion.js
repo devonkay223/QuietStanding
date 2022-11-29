@@ -55,15 +55,19 @@ function audio() {
   const carrier = cycle( add( baseFrequency, modulator ) )
   utilities.playWorklet(carrier)
 
+  
+  //gradient up to .05 for sound 
+  // index.value = scaleNum(x*100, [1, 25], [10, 0]);
+  // console.log(index.value/10, " x: ", x);
+
   window.addEventListener('devicemotion', function(e) 
 { 
   x = parseFloat(e.acceleration.x).toFixed(3);
   y = parseFloat(e.acceleration.y).toFixed(3);
   z = parseFloat(e.acceleration.z).toFixed(3); 
-  
-  //gradient up to .05 for sound 
-  index.value = scale(x, [0.0, 0.25], [1.0, 0.0]);
-  console.log(index, " x: ", x);
+   //gradient up to .05 for sound 
+  index.value = scaleNum(x*100, [1, 25], [10, 0]);
+  console.log(index.value/10, " x: ", x);
   
 });
 
@@ -90,7 +94,7 @@ window.onmousemove = function( e ) {
 
 }
 
-const scale = (number, fromInterval, toInterval) => {
+const scaleNum = (number, fromInterval, toInterval) => {
   if(number >= fromInterval[0] && number <= fromInterval[1]) {
          let oldIntervalUnits = fromInterval[1] - fromInterval[0] + 1;
          let newIntervalUnits = toInterval[1] - toInterval[0] + 1;
