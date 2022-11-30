@@ -27,10 +27,26 @@ var x, y, z;
   
 // });
 
-function getPerm(){
-  DeviceMotionEvent.requestPermission();
-  audio();
+function getPerm() {
+  // feature detect
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    DeviceMotionEvent.requestPermission()
+      .then(permissionState => {
+        if (permissionState === 'granted') {
+          //window.addEventListener('devicemotion', () => {});
+          audio();
+        }
+      })
+      .catch(console.error);
+  } else {
+    console.log("denied");
+  }
 }
+
+// function getPerm(){
+//   DeviceMotionEvent.requestPermission();
+//   audio();
+// }
 
 window.onload = ()=> {
   // window.addEventListener( 'click', audio )   
