@@ -7,6 +7,7 @@ function getPerm() {
       .then(permissionState => {
         if (permissionState === 'granted') {
           //window.addEventListener('devicemotion', () => {});
+          console.log("from perm")
           audio();
         }
       })
@@ -17,8 +18,8 @@ function getPerm() {
 }
 
 window.onload = ()=> {
-  // window.addEventListener( 'click', audio ) 
-  addEventListener('touchstart', audio);  
+  window.addEventListener( 'click', audio ) 
+  window.addEventListener('touchstart', audio);  
   genish.export( window );
 
   // audio context will be stored in utilities.ctx
