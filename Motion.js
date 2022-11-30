@@ -18,7 +18,7 @@ function getPerm() {
 }
 
 window.onload = ()=> {
-  window.addEventListener( 'click', audio ) 
+  // window.addEventListener( 'click', audio ) 
   window.addEventListener('touchstart', audio);  
   genish.export( window );
 
@@ -55,6 +55,7 @@ function audio() {
     z = parseFloat(e.acceleration.z).toFixed(3); 
     //gradient up to .05 for sound 
     //index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
+    console.log(scaleNum(abs(x)*100, [1, 25], [10, 0])/10, ", x: ", x, "\n")
     //console.log(index.value, " x: ", x);
 
     
