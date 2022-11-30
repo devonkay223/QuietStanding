@@ -28,7 +28,7 @@ window.onload = ()=> {
 
 
 function audio() {
-  const baseFrequency = 80,
+  const baseFrequency = 180,
   c2m = 1.4,
   index = param( 'idx', 0, 0.5, 1 )
 
