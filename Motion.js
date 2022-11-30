@@ -28,15 +28,16 @@ var x, y, z;
 // });
 
 function getPerm(){
-  DeviceMotionEvent.requestPermission()
+  DeviceMotionEvent.requestPermission();
+  audio();
 }
 
 window.onload = ()=> {
-  window.addEventListener( 'click', audio )   
-  genish.export( window )
+  // window.addEventListener( 'click', audio )   
+  genish.export( window );
 
   // audio context will be stored in utilities.ctx
-  utilities.createContext()
+  utilities.createContext();
 }
 
 function audio() {
@@ -45,15 +46,15 @@ function audio() {
   index = param( 'idx', 0, 0.5, 1 )
 
   // create our oscillator for modulation
-  let  modulator = cycle( mul( baseFrequency, c2m ) )
+  let  modulator = cycle( mul( baseFrequency, c2m ) );
 
 
   // scale amplitude based on index value, re-assign
-  modulator = mul( modulator, mul( baseFrequency, index ) )
+  modulator = mul( modulator, mul( baseFrequency, index ) );
 
   // create carrier oscillator and modulate frequency
-  const carrier = cycle( add( baseFrequency, modulator ) )
-  utilities.playWorklet(carrier)
+  const carrier = cycle( add( baseFrequency, modulator ) );
+  utilities.playWorklet(carrier);
 
   
   //gradient up to .05 for sound 
@@ -66,8 +67,8 @@ function audio() {
   y = parseFloat(e.acceleration.y).toFixed(3);
   z = parseFloat(e.acceleration.z).toFixed(3); 
    //gradient up to .05 for sound 
-  index.value = scaleNum(x*100, [1, 25], [10, 0]);
-  console.log(index.value/10, " x: ", x);
+  index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
+  console.log(index.value, " x: ", x);
   
 });
 
