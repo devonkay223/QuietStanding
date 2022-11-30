@@ -1,32 +1,5 @@
 var x, y, z;
 
-// function setup() 
-// {
-//   // set canvas size
-//   createCanvas(400, 400);
-//   frameRate(20);
-
-//   // default values
-//   x = 0;
-//   y = 0;
-//   z = 0;
-// }
-
-// function draw() {
-
-// }
-
-// window.addEventListener('devicemotion', function(e) 
-// { 
-//   x = parseFloat(e.acceleration.x).toFixed(3);
-//   y = parseFloat(e.acceleration.y).toFixed(3);
-//   z = parseFloat(e.acceleration.z).toFixed(3); 
-  
-//   //gradient up to .05 for sound 
-  
-  
-// });
-
 function getPerm() {
   // feature detect
   if (typeof DeviceMotionEvent.requestPermission === 'function') {
@@ -43,18 +16,15 @@ function getPerm() {
   }
 }
 
-// function getPerm(){
-//   DeviceMotionEvent.requestPermission();
-//   audio();
-// }
-
 window.onload = ()=> {
-  // window.addEventListener( 'click', audio )   
+  // window.addEventListener( 'click', audio ) 
+  addEventListener('touchstart', audio);  
   genish.export( window );
 
   // audio context will be stored in utilities.ctx
   utilities.createContext();
 }
+
 
 function audio() {
   const baseFrequency = 80,
@@ -78,37 +48,16 @@ function audio() {
   // console.log(index.value/10, " x: ", x);
 
   window.addEventListener('devicemotion', function(e) 
-{ 
-  x = parseFloat(e.acceleration.x).toFixed(3);
-  y = parseFloat(e.acceleration.y).toFixed(3);
-  z = parseFloat(e.acceleration.z).toFixed(3); 
-   //gradient up to .05 for sound 
-  //index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
-  console.log(index.value, " x: ", x);
-  
-});
+  { 
+    x = parseFloat(e.acceleration.x).toFixed(3);
+    y = parseFloat(e.acceleration.y).toFixed(3);
+    z = parseFloat(e.acceleration.z).toFixed(3); 
+    //gradient up to .05 for sound 
+    //index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
+    //console.log(index.value, " x: ", x);
 
-}
-
-function test(){
-  // param argumemnts: name, default value, min, max
-const carrierFrequency = param( 'freq', 440, 110, 990 )
-const modulationDepth  = param( 'mod', 5,0,100 )
-
-const modulator = mul( cycle(4), modulationDepth )
-const modulatedFrequency = add( carrierFrequency, modulator )
-
-utilities.playWorklet( cycle( modulatedFrequency ) )
-
-window.onmousemove = function( e ) { 
-  const percentY = e.clientY / window.innerHeight,
-        percentX = e.clientX / window.innerWidth
-  
-  // get a frequency range of {110,990}
-  carrierFrequency.value = 990 - (percentY * 880)
-  modulationDepth.value  = percentX * 100
-}
-
+    
+  });
 }
 
 const scaleNum = (number, fromInterval, toInterval) => {
