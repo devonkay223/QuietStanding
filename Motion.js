@@ -19,7 +19,7 @@ function getPerm() {
 
 window.onload = ()=> {
   // window.addEventListener( 'click', audio ) 
-  window.addEventListener('touchstart', audio);  
+  //window.addEventListener('touchstart', audio);  
   genish.export( window );
 
   // audio context will be stored in utilities.ctx
@@ -28,9 +28,10 @@ window.onload = ()=> {
 
 
 function audio() {
+  const ctx = utilities.ctx
   const baseFrequency = 180,
   c2m = 1.4,
-  index = param( 'idx', 0, 0.5, 1 )
+  index = param( 'idx', 0.5, 0, 20 )
 
   // create our oscillator for modulation
   let  modulator = cycle( mul( baseFrequency, c2m ) );
@@ -43,7 +44,6 @@ function audio() {
   const carrier = cycle( add( baseFrequency, modulator ) );
   utilities.playWorklet(carrier);
 
-  
   //gradient up to .05 for sound 
   // index.value = scaleNum(x*100, [1, 25], [10, 0]);
   // console.log(index.value/10, " x: ", x);
@@ -54,9 +54,8 @@ function audio() {
     y = parseFloat(e.acceleration.y).toFixed(3);
     z = parseFloat(e.acceleration.z).toFixed(3); 
     //gradient up to .05 for sound 
-    //index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
-    console.log(scaleNum(abs(x)*100, [1, 25], [10, 0])/10, ", x: ", x, "\n")
-    //console.log(index.value, " x: ", x);
+    index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
+    console.log(index.value, " x: ", x);
 
     
   });
