@@ -39,8 +39,7 @@ function audio() {
 
   // create our oscillator for modulation
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
-
-
+  
   // scale amplitude based on index value, re-assign
   const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) )
 
@@ -54,7 +53,7 @@ function audio() {
   //gradient up to .05 for sounds
   window.addEventListener('devicemotion', function(e) 
   { 
-    console.log("motion")
+    // console.log("motion")
     // can you change the rate of sampling on listeners?
       x = parseFloat(e.acceleration.x).toFixed(3)
       y = parseFloat(e.acceleration.y).toFixed(3)
@@ -64,8 +63,8 @@ function audio() {
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    index.value = scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100
-    console.log(scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100, ", ", x)   
+    index.waapi.value = scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100
+    console.log(index.waapi.value)   
   });
 }
 
@@ -128,7 +127,7 @@ function test3(){
     // get a frequency range of {110,990}
     carrierFrequency.value = scaleNum(Math.abs(x)*1000, [0, 250], [110, 990])
     // modulationDepth.value  = scaleNum(Math.abs(y)*1000, [0, 250], [110, 990])
-    console.log(carrierFrequency.waapi.value, ", ", x)
+    // console.log(carrierFrequency.waapi.value, ", ", x)
   });
 
   // window.onmousemove = function( e ) { 
