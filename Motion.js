@@ -39,7 +39,7 @@ function audio() {
 
   // create our oscillator for modulation
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
-  
+
   // scale amplitude based on index value, re-assign
   const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) )
 
@@ -55,15 +55,17 @@ function audio() {
   { 
     // console.log("motion")
     // can you change the rate of sampling on listeners?
-      x = parseFloat(e.acceleration.x).toFixed(3)
-      y = parseFloat(e.acceleration.y).toFixed(3)
-      z = parseFloat(e.acceleration.z).toFixed(3);
+    x = parseFloat(e.acceleration.x).toFixed(3)
+    y = parseFloat(e.acceleration.y).toFixed(3)
+    z = parseFloat(e.acceleration.z).toFixed(3);
 
-  
+    console.log(x, ", ", y, ", ",z, ", ")
+    let avg = (x+y+z)/3
+    console.log(avg)
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    index.waapi.value = scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100
+    index.waapi.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
     console.log(index.waapi.value)   
   });
 }
