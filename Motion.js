@@ -60,8 +60,10 @@ function audio() {
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    index.value = scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100;
-    console.log(index.value, " x: ", x);    
+    let scalVal= scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100;
+    console.log(scalVal);
+    index.value = scalVal;
+    console.log(x, scalVal, index.value);    
   });
 }
 
