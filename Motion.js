@@ -6,9 +6,7 @@ function getPerm() {
     DeviceMotionEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') {
-          //window.addEventListener('devicemotion', () => {});
-          console.log("from perm")
-          audio();
+          console.log("granted");
         }
       })
       .catch(console.error);
@@ -18,8 +16,7 @@ function getPerm() {
 }
 
 window.onload = ()=> {
-  // window.addEventListener( 'click', audio ) 
-  //window.addEventListener('touchstart', audio);  
+  // genish.js
   genish.export( window );
 
   // audio context will be stored in utilities.ctx
@@ -31,7 +28,7 @@ function audio() {
   const ctx = utilities.ctx
   const baseFrequency = 180,
   c2m = 1.4,
-  index = param( 'idx', 0.5, 0, 20 )
+  index = param( 'idx', 0, 0, 0.95 )
 
   // create our oscillator for modulation
   let  modulator = cycle( mul( baseFrequency, c2m ) );
@@ -44,20 +41,24 @@ function audio() {
   const carrier = cycle( add( baseFrequency, modulator ) );
   utilities.playWorklet(carrier);
 
-  //gradient up to .05 for sound 
-  // index.value = scaleNum(x*100, [1, 25], [10, 0]);
-  // console.log(index.value/10, " x: ", x);
+  //add a loop here that grabs chunks of data 
+  //dont want to call listener on every loop BUT dont want loop called on every motion event 
 
+  //gradient up to .05 for sounds
   window.addEventListener('devicemotion', function(e) 
   { 
-    x = parseFloat(e.acceleration.x).toFixed(3);
-    y = parseFloat(e.acceleration.y).toFixed(3);
-    z = parseFloat(e.acceleration.z).toFixed(3); 
-    //gradient up to .05 for sound 
-    index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
-    console.log(index.value, " x: ", x);
 
-    
+    // can you change the rate of sampling on listeners?
+      x = parseFloat(e.acceleration.x).toFixed(3);
+      y = parseFloat(e.acceleration.y).toFixed(3);
+      z = parseFloat(e.acceleration.z).toFixed(3); 
+
+  
+    //average data for chunks
+    //set benchmarks for movement
+    //perform linear smoothing between amplitude changes 
+    index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
+    console.log(index.value, " x: ", x);    
   });
 }
 
