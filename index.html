@@ -175,7 +175,7 @@
             idx = 0
             frequency = param( pattern[ idx ] )
 
-            play( cycle( frequency ) )
+            utilities.playWorklet( cycle( frequency ) )
 
             // change frequency every 100ms (approximately, setInterval is not sample accurate) 
             intrvl = setInterval( ()=> { 
