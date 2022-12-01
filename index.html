@@ -101,7 +101,7 @@
             //     console.log( 'playing...' )
             // })
 
-            utilities.playWorklet( cycle( 330 ) )
+            utilities.playWorklet( cycle( add( baseFrequency, modulator ) ) )
         
             window.removeEventListener( 'touchstart', click )
         }
