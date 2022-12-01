@@ -41,8 +41,8 @@ function audio() {
   // const ctx = utilities.ctx
   const baseFrequency = 180
   const c2m = 1.4
-  const index = param( 'idx', 0, 0, 0.95)
-
+  const index = param( 'idx', 0.5, 0, 0.95)
+  console.log("in audio")
   // create our oscillator for modulation
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
 
@@ -52,6 +52,8 @@ function audio() {
   // create carrier oscillator and modulate frequency
   const carrier = cycle( add( baseFrequency, modulator ) )
   utilities.playWorklet(carrier)
+
+  console.log("playing audio")
 
   //add a loop here that grabs chunks of data 
   //dont want to call listener on every loop BUT dont want loop called on every motion event 
