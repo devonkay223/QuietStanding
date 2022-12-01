@@ -94,6 +94,9 @@
             // create carrier oscillator and modulate frequency
             const carrier = cycle( add( baseFrequency, modulator ) );
             //utilities.playWorklet(carrier);
+            index.value = 6585;
+            console.log(index);
+            console.log(index.value);
 
             // utilities.playWorklet( 
             //     cycle( add( 220, input('freqMod', 0, 0 ) ) ), 
