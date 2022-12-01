@@ -13,9 +13,14 @@ function getPerm() {
   } else {
     console.log("denied");
   }
-  console.log(Math.abs(-0.88));
-  console.log(scaleNum(Math.abs(-0.088)*1000, [0, 250], [100, 0]));
-  console.log(scaleNum(Math.abs(-0.088)*1000, [0, 250], [100, 0])/100);
+  pattern = [ 440, 660, 880, 1100 ]
+  idx = 0
+  index = param(pattern[idx], 0.1, 0, 0.95);
+  console.log(index.value);
+  index.value = 0.5;
+  console.log(index.value);
+  console.log(index);
+  
 }
 
 window.onload = ()=> {
@@ -31,7 +36,7 @@ function audio() {
   const ctx = utilities.ctx
   const baseFrequency = 180,
   c2m = 1.4,
-  index = param( 'idx', 0, 0, 0.95 )
+  index = param( 'idx', 0, 0, 0.95)
 
   // create our oscillator for modulation
   let  modulator = cycle( mul( baseFrequency, c2m ) );
@@ -82,3 +87,50 @@ const scaleNum = (number, fromInterval, toInterval) => {
  }
  return NaN;
 };
+
+function test4() {
+  console.log("test4");
+  const ctx = utilities.ctx
+  const baseFrequency = 180,
+  c2m = 1.4
+  //index = param( 'idx', 0, 0.5, 1 )
+
+  pattern = [ 440, 660, 880, 1100 ]
+  idx = 0
+  frequency = param( pattern[ idx ], 0, 440, 1200 )
+  console.log(frequency);
+  console.log(frequency.value)
+
+  utilities.playWorklet( cycle( frequency ) )
+
+  // change frequency every 100ms (approximately, setInterval is not sample accurate) 
+  intrvl = setInterval( ()=> { 
+  frequency.value = pattern[ idx++ % pattern.length ];
+  }, 100 )
+}
+
+function test3(){
+// param argumemnts: name, default value, min, max
+const carrierFrequency = param( 'freq', 440, 110, 990 )
+const modulationDepth  = param( 'mod', 5,0,100 )
+
+const modulator = mul( cycle(4), modulationDepth )
+const modulatedFrequency = add( carrierFrequency, modulator )
+
+utilities.playWorklet( cycle( modulatedFrequency ) )
+
+window.addEventListener('devicemotion', function(e) 
+  { 
+
+    // can you change the rate of sampling on listeners?
+      x = parseFloat(e.acceleration.x).toFixed(3);
+      y = parseFloat(e.acceleration.y).toFixed(3);
+      z = parseFloat(e.acceleration.z).toFixed(3); 
+
+  
+  // get a frequency range of {110,990}
+  carrierFrequency.value = x
+  modulationDepth.value  = y
+  console.log(carrierFrequency.value, ", ", modulationDepth.value)
+}
+}
