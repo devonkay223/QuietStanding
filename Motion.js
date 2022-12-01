@@ -6,7 +6,7 @@ function getPerm() {
     DeviceMotionEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') {
-          console.log("granted");
+          console.log("granted 1");
         }
       })
       .catch(console.error);
@@ -20,7 +20,6 @@ function getPerm() {
   // index.value = 0.5;
   // console.log(index.value);
   // console.log(index);
-  
 }
 
 window.onload = ()=> {
@@ -55,7 +54,7 @@ function audio() {
   //gradient up to .05 for sounds
   window.addEventListener('devicemotion', function(e) 
   { 
-
+    console.log("motion")
     // can you change the rate of sampling on listeners?
       x = parseFloat(e.acceleration.x).toFixed(3)
       y = parseFloat(e.acceleration.y).toFixed(3)
