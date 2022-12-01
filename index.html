@@ -85,6 +85,7 @@
 
             // scale amplitude based on index value, re-assign
             modulator = mul( modulator, mul( baseFrequency, index ) );
+            let addVar= add( baseFrequency, modulator );
 
             // create carrier oscillator and modulate frequency
             const carrier = cycle( add( baseFrequency, modulator ) );
@@ -101,7 +102,7 @@
             //     console.log( 'playing...' )
             // })
 
-            utilities.playWorklet( cycle( add( baseFrequency, modulator ) ) )
+            utilities.playWorklet( cycle( addVar ) )
         
             window.removeEventListener( 'touchstart', click )
         }
