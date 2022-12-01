@@ -69,6 +69,7 @@
         <h1>Quiet Standing 3</h1>
         <!-- <button id="accelPermsButton"  style="height:50px;" onclick="getPerm()"><h2>Get Accelerometer Permissions</h2></button> -->
         <!-- <button id="accelPermsButton"  style="height:50px;" onclick="audio()"><h2>Audio</h2></button> -->
+        <button id="audio"  style="height:50px;" onclick="audio()"><h2>audio</h2></button> 
         <button id="test1"  style="height:50px;" onclick="test1()"><h2>test1</h2></button> 
         <button id="test2"  style="height:50px;" onclick="test2()"><h2>test2</h2></button> 
         <button id="test3"  style="height:50px;" onclick="test3()"><h2>test3</h2></button> 
@@ -81,7 +82,7 @@
             const ctx = utilities.ctx
             const baseFrequency = 180,
             c2m = 1.4,
-            index = param( 'idx', 0, 0.5, 1 )
+            index = param( 'idx', 0, 0.5, 20 )
 
             // create our oscillator for modulation
             let  modulator = cycle( mul( baseFrequency, c2m ) );
@@ -89,12 +90,11 @@
 
             // scale amplitude based on index value, re-assign
             modulator = mul( modulator, mul( baseFrequency, index ) );
-            let addVar= add( baseFrequency, modulator );
 
             // create carrier oscillator and modulate frequency
             const carrier = cycle( add( baseFrequency, modulator ) );
             //utilities.playWorklet(carrier);
-            index.value = 6585;
+            index.value = 6;
             console.log(index);
             console.log(index.value);
 
@@ -109,7 +109,7 @@
             //     console.log( 'playing...' )
             // })
 
-            utilities.playWorklet( cycle( addVar ) )
+            utilities.playWorklet( carrier )
         
             window.removeEventListener( 'touchstart', click )
         }
