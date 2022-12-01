@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang=en>
   <head>
     <meta charset='utf-8'>
@@ -53,9 +53,10 @@
     }
 
   </script>
-</html>
+</html> -->
 
-<!-- <!doctype html>
+<!doctype html>
+<html lang=en>
     <head>
         <title>QuietStanding</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
@@ -64,10 +65,43 @@
         <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
         <link rel="stylesheet" href="style.css" type="text/css">
     </head>
-<body>
-    <h1>Quiet Standing</h1>
-    <button id="accelPermsButton"  style="height:50px;" onclick="getPerm()"><h2>Get Accelerometer Permissions</h2></button>
-    <button id="accelPermsButton"  style="height:50px;" onclick="audio()"><h2>Audio</h2></button>
-    <script  type="text/javascript" src="Motion.js"></script>
-</body>
-</html> -->
+    <body>
+        <h1>Quiet Standing</h1>
+        <!-- <button id="accelPermsButton"  style="height:50px;" onclick="getPerm()"><h2>Get Accelerometer Permissions</h2></button> -->
+        <!-- <button id="accelPermsButton"  style="height:50px;" onclick="audio()"><h2>Audio</h2></button> -->
+        <!-- <script  type="text/javascript" src="Motion.js"></script> -->
+        <script>
+
+            const audio = function() {
+              console.log("touch start recognized")
+                const baseFrequency = 180,
+                c2m = 1.4,
+                index = param( 'idx', 0, 0.5, 1 )
+
+                // create our oscillator for modulation
+                let  modulator = cycle( mul( baseFrequency, c2m ) );
+
+
+                // scale amplitude based on index value, re-assign
+                modulator = mul( modulator, mul( baseFrequency, index ) );
+
+                // create carrier oscillator and modulate frequency
+                const carrier = cycle( add( baseFrequency, modulator ) );
+                utilities.playWorklet(carrier);
+            
+              window.removeEventListener( 'touchstart', click )
+            }
+        
+            window.onload = ()=> {
+              window.addEventListener( 'touchstart', audio )
+              window.addEventListener( 'click', audio )
+        
+              genish.export( window )
+        
+              // audio context will be stored in utilities.ctx
+              utilities.createContext()
+            }
+        
+          </script>
+    </body>
+</html>
