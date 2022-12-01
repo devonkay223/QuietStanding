@@ -69,6 +69,10 @@
         <h1>Quiet Standing 3</h1>
         <!-- <button id="accelPermsButton"  style="height:50px;" onclick="getPerm()"><h2>Get Accelerometer Permissions</h2></button> -->
         <!-- <button id="accelPermsButton"  style="height:50px;" onclick="audio()"><h2>Audio</h2></button> -->
+        <button id="test1"  style="height:50px;" onclick="test1()"><h2>test1</h2></button> 
+        <button id="test2"  style="height:50px;" onclick="test2()"><h2>test2</h2></button> 
+        <button id="test3"  style="height:50px;" onclick="test3()"><h2>test3</h2></button> 
+        <button id="test4"  style="height:50px;" onclick="test4()"><h2>test4</h2></button> 
         <!-- <script  type="text/javascript" src="Motion.js"></script> -->
     </body>
     <script>
@@ -108,13 +112,90 @@
         }
     
         window.onload = ()=> {
-            window.addEventListener( 'touchstart', audio )
-            window.addEventListener( 'click', audio )
+            //window.addEventListener( 'touchstart', audio )
+            //window.addEventListener( 'click', audio )
     
             genish.export( window )
     
             // audio context will be stored in utilities.ctx
             utilities.createContext()
+        }
+
+        function test1() {
+            console.log("touch start recognized")
+            const ctx = utilities.ctx
+            const baseFrequency = 180,
+            c2m = 1.4,
+            index = param( 'idx', 0, 0.5, 1 )
+
+            utilities.playWorklet( cycle( mul( baseFrequency, c2m ) ) )
+        
+            //window.removeEventListener( 'touchstart', click )
+        }
+
+        function test2() {
+            console.log("touch start recognized")
+            const ctx = utilities.ctx
+            const baseFrequency = 180,
+            c2m = 1.4,
+            index = param( 'idx', 0, 0.5, 1 )
+
+            // create our oscillator for modulation
+            let  modulator = cycle( mul( baseFrequency, c2m ) );
+
+
+            // scale amplitude based on index value, re-assign
+            modulator = mul( modulator, mul( baseFrequency, index ) );
+
+            utilities.playWorklet( modulator )
+        
+            //window.removeEventListener( 'touchstart', click )
+        }
+
+        function test3() {
+            console.log("touch start recognized")
+            const ctx = utilities.ctx
+            const baseFrequency = 180,
+            c2m = 1.4,
+            index = param( 'idx', 0, 0.5, 1 )
+
+            utilities.playWorklet( cycle(baseFrequency) )
+        
+            //window.removeEventListener( 'touchstart', click )
+        }
+
+        function test4() {
+            console.log("touch start recognized")
+            const ctx = utilities.ctx
+            const baseFrequency = 180,
+            c2m = 1.4,
+            index = param( 'idx', 0, 0.5, 1 )
+            // create our oscillator for modulation
+            let  modulator = cycle( mul( baseFrequency, c2m ) );
+
+
+            // scale amplitude based on index value, re-assign
+            modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) );
+            let addVar= add( baseFrequency, modulator );
+
+            // create carrier oscillator and modulate frequency
+            const carrier = cycle( add( baseFrequency, mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) ) ) );
+            //utilities.playWorklet(carrier);
+
+            // utilities.playWorklet( 
+            //     cycle( add( 220, input('freqMod', 0, 0 ) ) ), 
+            //     'test', // this name isn't really important
+            //     true    // print generated code to developers console
+            // ).then( node => {
+            //     gain.connect( node )
+            //     sine.start()
+
+            //     console.log( 'playing...' )
+            // })
+
+            utilities.playWorklet( cycle( add( baseFrequency, mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) ) ) ))
+        
+            //window.removeEventListener( 'touchstart', click )
         }
     </script>
 </html>
