@@ -39,7 +39,7 @@ window.onload = ()=> {
 
 function audio() {
   // const ctx = utilities.ctx
-  const baseFrequency = 180
+  const baseFrequency = 80
   const c2m = 1.4
   const index = param( 'idx',0, 0, 0.95)
   console.log("in audio")
@@ -51,7 +51,7 @@ function audio() {
 
   // create carrier oscillator and modulate frequency
   const carrier = cycle( add( baseFrequency, modulator ) )
-  utilities.playWorklet(carrier)
+  utilities.playWorklet(modulator)
 
   console.log("playing audio")
 
@@ -140,4 +140,19 @@ function test3(){
     console.log(carrierFrequency.waapi.value)
   }
 
+}
+
+function test2() {
+  const baseFrequency = 80
+  const c2m = 1.4
+  const index = 0.2
+  // create our oscillator for modulation
+  let  modulator = cycle( mul( baseFrequency, c2m ) )
+
+  // scale amplitude based on index value, re-assign
+  modulator = mul( modulator, mul( baseFrequency, index ) )
+
+  // create carrier oscillator and modulate frequency
+  const carrier = cycle( add( baseFrequency, modulator ) )
+  utilities.playWorklet(modulator)
 }
