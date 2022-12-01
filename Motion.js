@@ -13,13 +13,19 @@ function getPerm() {
   } else {
     console.log("denied");
   }
-  // pattern = [ 440, 660, 880, 1100 ]
-  // idx = 0
-  // index = param(pattern[idx], 0.1, 0, 0.95);
-  // console.log(index.value);
-  // index.value = 0.5;
-  // console.log(index.value);
-  // console.log(index);
+    // const index = param( 'idx', 0, 0, 0.95)
+    // x = Math.abs(0.4356)
+    // y = Math.abs(-0.3928)
+    // z = Math.abs(-0.243543)
+
+    // console.log(x, ", ", y, ", ",z)
+    // let avg = ((x+y+z)/3.00)
+    // console.log("avg: ", avg)
+    // //average data for chunks
+    // //set benchmarks for movement
+    // //perform linear smoothing between amplitude changes 
+    // index.waapi.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
+    // console.log("value: ", index.waapi.value)  
 }
 
 window.onload = ()=> {
@@ -55,9 +61,9 @@ function audio() {
   { 
     // console.log("motion")
     // can you change the rate of sampling on listeners?
-    x = parseFloat(e.acceleration.x).toFixed(3)
-    y = parseFloat(e.acceleration.y).toFixed(3)
-    z = parseFloat(e.acceleration.z).toFixed(3);
+    x = Math,abs(parseFloat(e.acceleration.x).toFixed(3))
+    y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
+    z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
 
     console.log(x, ", ", y, ", ",z)
     let avg = ((x+y+z)/3.00)
@@ -65,8 +71,8 @@ function audio() {
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    index.waapi.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
-    console.log("value: ", index.waapi.value)   
+    index.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
+    console.log("value: ", index.value)   
   });
 }
 
@@ -109,11 +115,18 @@ function test4() {
 
 function test3(){
   // param argumemnts: name, default value, min, max
+  const baseFrequency = 180
+  const c2m = 1.4
   const carrierFrequency = param( 'freq', 0.5, 0, 990 )
-  const modulationDepth  = param( 'mod', 5,0,100 )
+  // const modulationDepth  = param( 'mod', 5,0,100 )
 
-  const modulator = mul( cycle(4), modulationDepth )
-  const modulatedFrequency = add( carrierFrequency, modulator )
+  // const modulator = mul( cycle(4), modulationDepth )
+  // const modulatedFrequency = add( carrierFrequency, modulator )
+
+  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, carrierFrequency ) )
+
+  // create carrier oscillator and modulate frequency
+  const carrier = cycle( add( baseFrequency, modulator ) )
 
   utilities.playWorklet( cycle( modulatedFrequency ) )
 
@@ -127,9 +140,9 @@ function test3(){
 
     
     // get a frequency range of {110,990}
-    carrierFrequency.value = scaleNum(Math.abs(x)*1000, [0, 250], [110, 990])
+    carrierFrequency.value = (scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100) //scaleNum(Math.abs(x)*1000, [0, 250], [110, 990])
     // modulationDepth.value  = scaleNum(Math.abs(y)*1000, [0, 250], [110, 990])
-    // console.log(carrierFrequency.waapi.value, ", ", x)
+    console.log(carrierFrequency.waapi.value, ", ", x)
   });
 
   // window.onmousemove = function( e ) { 
