@@ -66,7 +66,7 @@ function audio() {
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
     index.value = scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100
-    // console.log(x, scalVal, index.value);    
+    console.log(scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100, ", ", x)   
   });
 }
 
