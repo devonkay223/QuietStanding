@@ -63,7 +63,7 @@ function audio() {
   { 
     // console.log("motion")
     // can you change the rate of sampling on listeners?
-    x = Math,abs(parseFloat(e.acceleration.x).toFixed(3))
+    x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
     y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
     z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
 
@@ -74,7 +74,8 @@ function audio() {
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
     index.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
-    console.log("value: ", index.waapi.value)   
+    console.log("value: ", index.value)
+    console.log("waapi value: ", index.waapi.value)   
   });
 }
 
