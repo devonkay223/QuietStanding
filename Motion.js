@@ -47,7 +47,7 @@ function audio() {
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
 
   // scale amplitude based on index value, re-assign
-  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index.waapi.value ) )
+  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) )
 
   // create carrier oscillator and modulate frequency
   const carrier = cycle( add( baseFrequency, modulator ) )
@@ -72,7 +72,7 @@ function audio() {
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
     index.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
-    console.log("value: ", index.value)   
+    console.log("value: ", index.waapi.value)   
   });
 }
 
@@ -115,43 +115,21 @@ function test4() {
 
 function test3(){
   // param argumemnts: name, default value, min, max
-  const baseFrequency = 180
-  const c2m = 1.4
   const carrierFrequency = param( 'freq', 0.5, 0, 990 )
-  // const modulationDepth  = param( 'mod', 5,0,100 )
+  const modulationDepth  = param( 'mod', 5,0,100 )
 
-  // const modulator = mul( cycle(4), modulationDepth )
-  // const modulatedFrequency = add( carrierFrequency, modulator )
-
-  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, carrierFrequency ) )
-
-  // create carrier oscillator and modulate frequency
-  const carrier = cycle( add( baseFrequency, modulator ) )
+  const modulator = mul( cycle(4), modulationDepth )
+  const modulatedFrequency = add( carrierFrequency, modulator )
 
   utilities.playWorklet( cycle( modulatedFrequency ) )
 
-  window.addEventListener('devicemotion', function(e) 
-    { 
-
-      // can you change the rate of sampling on listeners?
-        x = parseFloat(e.acceleration.x).toFixed(3)
-        y = parseFloat(e.acceleration.y).toFixed(3)
-        z = parseFloat(e.acceleration.z).toFixed(3)
-
+  window.onmousemove = function( e ) { 
+    const percentY = e.clientY / window.innerHeight,
+          percentX = e.clientX / window.innerWidth
     
     // get a frequency range of {110,990}
-    carrierFrequency.value = (scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100) //scaleNum(Math.abs(x)*1000, [0, 250], [110, 990])
-    // modulationDepth.value  = scaleNum(Math.abs(y)*1000, [0, 250], [110, 990])
-    console.log(carrierFrequency.waapi.value, ", ", x)
-  });
-
-  // window.onmousemove = function( e ) { 
-  //   const percentY = e.clientY / window.innerHeight,
-  //         percentX = e.clientX / window.innerWidth
-    
-  //   // get a frequency range of {110,990}
-  //   carrierFrequency.waapi.value = 990 - (percentY * 880)
-  //   console.log(carrierFrequency.waapi.value)
-  // }
+    carrierFrequency.value = 990 - (percentY * 880)
+    console.log(carrierFrequency.waapi.value)
+  }
 
 }
