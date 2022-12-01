@@ -108,7 +108,7 @@ function test4() {
 
 function test3(){
   // param argumemnts: name, default value, min, max
-  const carrierFrequency = param( 'freq', 440, 110, 990 )
+  const carrierFrequency = param( 'freq', 0.5, 0, 990 )
   const modulationDepth  = param( 'mod', 5,0,100 )
 
   const modulator = mul( cycle(4), modulationDepth )
@@ -127,7 +127,17 @@ function test3(){
     
     // get a frequency range of {110,990}
     carrierFrequency.value = scaleNum(Math.abs(x)*1000, [0, 250], [110, 990])
-    modulationDepth.value  = scaleNum(Math.abs(y)*1000, [0, 250], [110, 990])
-    // console.log(carrierFrequency.value, ", ", modulationDepth.value)
+    // modulationDepth.value  = scaleNum(Math.abs(y)*1000, [0, 250], [110, 990])
+    console.log(carrierFrequency.waapi.value, ", ", x)
   });
+
+  // window.onmousemove = function( e ) { 
+  //   const percentY = e.clientY / window.innerHeight,
+  //         percentX = e.clientX / window.innerWidth
+    
+  //   // get a frequency range of {110,990}
+  //   carrierFrequency.waapi.value = 990 - (percentY * 880)
+  //   console.log(carrierFrequency.waapi.value)
+  // }
+
 }
