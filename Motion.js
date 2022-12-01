@@ -33,21 +33,21 @@ window.onload = ()=> {
 
 
 function audio() {
-  const ctx = utilities.ctx
-  const baseFrequency = 180,
-  c2m = 1.4,
-  index = param( 'idx', 0, 0, 0.95)
+  // const ctx = utilities.ctx
+  const baseFrequency = 180
+  const c2m = 1.4
+  const index = param( 'idx', 0, 0, 0.95)
 
   // create our oscillator for modulation
-  let  modulator = cycle( mul( baseFrequency, c2m ) );
+  // const  modulator = cycle( mul( baseFrequency, c2m ) )
 
 
   // scale amplitude based on index value, re-assign
-  modulator = mul( modulator, mul( baseFrequency, index ) );
+  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) )
 
   // create carrier oscillator and modulate frequency
-  const carrier = cycle( add( baseFrequency, modulator ) );
-  utilities.playWorklet(carrier);
+  const carrier = cycle( add( baseFrequency, modulator ) )
+  utilities.playWorklet(carrier)
 
   //add a loop here that grabs chunks of data 
   //dont want to call listener on every loop BUT dont want loop called on every motion event 
@@ -57,18 +57,16 @@ function audio() {
   { 
 
     // can you change the rate of sampling on listeners?
-      x = parseFloat(e.acceleration.x).toFixed(3);
-      y = parseFloat(e.acceleration.y).toFixed(3);
-      z = parseFloat(e.acceleration.z).toFixed(3); 
+      x = parseFloat(e.acceleration.x).toFixed(3)
+      y = parseFloat(e.acceleration.y).toFixed(3)
+      z = parseFloat(e.acceleration.z).toFixed(3);
 
   
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    let scalVal= scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100;
-    console.log(scalVal);
-    index.value = scalVal;
-    console.log(x, scalVal, index.value);    
+    index.value = scaleNum(Math.abs(x)*1000, [0, 250], [100, 0])/100
+    // console.log(x, scalVal, index.value);    
   });
 }
 
@@ -131,6 +129,6 @@ function test3(){
     // get a frequency range of {110,990}
     carrierFrequency.value = scaleNum(Math.abs(x)*1000, [0, 250], [110, 990])
     modulationDepth.value  = scaleNum(Math.abs(y)*1000, [0, 250], [110, 990])
-    console.log(carrierFrequency.value, ", ", modulationDepth.value)
+    // console.log(carrierFrequency.value, ", ", modulationDepth.value)
   });
 }
