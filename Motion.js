@@ -13,6 +13,9 @@ function getPerm() {
   } else {
     console.log("denied");
   }
+  console.log(Math.abs(-0.88));
+  console.log(scaleNum(Math.abs(-0.088)*1000, [0, 250], [100, 0]));
+  console.log(scaleNum(Math.abs(-0.088)*1000, [0, 250], [100, 0])/100);
 }
 
 window.onload = ()=> {
@@ -53,13 +56,11 @@ function audio() {
       y = parseFloat(e.acceleration.y).toFixed(3);
       z = parseFloat(e.acceleration.z).toFixed(3); 
 
-      console.log("motion");
-
   
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    index.value = scaleNum(Math.abs(x)*100, [0, 25], [10, 0])/10;
+    index.value = scaleNum(Math.abs(-0.088)*1000, [0, 250], [100, 0])/100;
     console.log(index.value, " x: ", x);    
   });
 }
