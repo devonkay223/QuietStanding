@@ -82,7 +82,7 @@
             const ctx = utilities.ctx
             const baseFrequency = 180,
             c2m = 1.4,
-            index = param( 'idx', 0, 0.5, 20 )
+            index = param( 'idx', 0.5, 0, 20 )
 
             // create our oscillator for modulation
             let  modulator = cycle( mul( baseFrequency, c2m ) );
