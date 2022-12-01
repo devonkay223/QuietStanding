@@ -59,24 +59,23 @@ function audio() {
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    index.value = scaleNum(abs(x)*100, [1, 25], [10, 0])/10;
+    index.value = scaleNum(Math.abs(x)*100, [0, 25], [10, 0])/10;
     console.log(index.value, " x: ", x);    
   });
 }
 
 const scaleNum = (number, fromInterval, toInterval) => {
   if(number >= fromInterval[0] && number <= fromInterval[1]) {
-         let oldIntervalUnits = fromInterval[1] - fromInterval[0] + 1;
-         let newIntervalUnits = toInterval[1] - toInterval[0] + 1;
+    let oldIntervalUnits = fromInterval[1] - fromInterval[0] + 1;
+    let newIntervalUnits = toInterval[1] - toInterval[0] + 1;
 
-         let oldNumberPosition = -fromInterval[0] + number + 1;
+    let oldNumberPosition = -fromInterval[0] + number + 1;
 
-         let percentage = oldNumberPosition / oldIntervalUnits;
-         
-         let newNumberPosition = Math.round(percentage * newIntervalUnits);
+    let percentage = oldNumberPosition / oldIntervalUnits;
+    
+    let newNumberPosition = Math.round(percentage * newIntervalUnits);
 
-         return toInterval[0] + newNumberPosition - 1;
+    return toInterval[0] + newNumberPosition - 1;
  }
- 
  return NaN;
 };
