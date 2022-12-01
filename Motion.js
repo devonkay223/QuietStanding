@@ -13,6 +13,7 @@ function getPerm() {
   } else {
     console.log("denied");
   }
+  console.log((0.01+0.2+0.3345)/3.00)
   // pattern = [ 440, 660, 880, 1100 ]
   // idx = 0
   // index = param(pattern[idx], 0.1, 0, 0.95);
@@ -41,7 +42,7 @@ function audio() {
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
 
   // scale amplitude based on index value, re-assign
-  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) )
+  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index.waapi.value ) )
 
   // create carrier oscillator and modulate frequency
   const carrier = cycle( add( baseFrequency, modulator ) )
@@ -59,14 +60,14 @@ function audio() {
     y = parseFloat(e.acceleration.y).toFixed(3)
     z = parseFloat(e.acceleration.z).toFixed(3);
 
-    console.log(x, ", ", y, ", ",z, ", ")
-    let avg = (x+y+z)/3
-    console.log(avg)
+    console.log(x, ", ", y, ", ",z)
+    let avg = ((x+y+z)/3.00)
+    console.log("avg: ", avg)
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
     index.waapi.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
-    console.log(index.waapi.value)   
+    console.log("value: ", index.waapi.value)   
   });
 }
 
