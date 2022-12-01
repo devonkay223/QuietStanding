@@ -41,7 +41,7 @@ function audio() {
   // const ctx = utilities.ctx
   const baseFrequency = 180
   const c2m = 1.4
-  const index = param( 'idx', 0.5, 0, 0.95)
+  const index = param( 'idx',0, 0, 0.95)
   console.log("in audio")
   // create our oscillator for modulation
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
@@ -73,7 +73,12 @@ function audio() {
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    index.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
+    if (avg >= 0.25) {
+      index.value = 0
+    }
+    else {
+      index.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
+    }
     console.log("value: ", index.value)
     console.log("waapi value: ", index.waapi.value)   
   });
