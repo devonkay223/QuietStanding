@@ -53,6 +53,8 @@ function audio() {
       y = parseFloat(e.acceleration.y).toFixed(3);
       z = parseFloat(e.acceleration.z).toFixed(3); 
 
+      console.log("motion");
+
   
     //average data for chunks
     //set benchmarks for movement
