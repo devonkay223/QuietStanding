@@ -169,14 +169,18 @@
             const ctx = utilities.ctx
             const baseFrequency = 180,
             c2m = 1.4,
-            index = param( 'idx', 0, 0.5, 1 )
-            // create our oscillator for modulation
-            let  modulator = cycle( mul( baseFrequency, c2m ) );
+            //index = param( 'idx', 0, 0.5, 1 )
+
+            pattern = [ 80, 100, 120, 140 ]
+            idx = 0
+            index = param( pattern[ idx ] )
 
 
-            // scale amplitude based on index value, re-assign
-            modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) );
-            let addVar= add( baseFrequency, modulator );
+            // change frequency every 100ms (approximately, setInterval is not sample accurate) 
+            intrvl = setInterval( ()=> { 
+            frequency.value = pattern[ idx++ % pattern.length ] 
+            }, 100 )
+            
 
             // create carrier oscillator and modulate frequency
             const carrier = cycle( add( baseFrequency, mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) ) ) );
