@@ -168,36 +168,44 @@
             console.log("touch start recognized")
             const ctx = utilities.ctx
             const baseFrequency = 180,
-            c2m = 1.4,
+            c2m = 1.4
             //index = param( 'idx', 0, 0.5, 1 )
 
-            pattern = [ 80, 100, 120, 140 ]
+            pattern = [ 440, 660, 880, 1100 ]
             idx = 0
-            index = param( pattern[ idx ] )
+            frequency = param( pattern[ idx ] )
 
+            play( cycle( frequency ) )
 
             // change frequency every 100ms (approximately, setInterval is not sample accurate) 
             intrvl = setInterval( ()=> { 
             frequency.value = pattern[ idx++ % pattern.length ] 
             }, 100 )
+
+
+
+            // // change frequency every 100ms (approximately, setInterval is not sample accurate) 
+            // intrvl = setInterval( ()=> { 
+            // frequency.value = pattern[ idx++ % pattern.length ] 
+            // }, 100 )
             
 
-            // create carrier oscillator and modulate frequency
-            const carrier = cycle( add( baseFrequency, mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) ) ) );
-            //utilities.playWorklet(carrier);
+            // // create carrier oscillator and modulate frequency
+            // const carrier = cycle( add( baseFrequency, mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) ) ) );
+            // //utilities.playWorklet(carrier);
 
-            // utilities.playWorklet( 
-            //     cycle( add( 220, input('freqMod', 0, 0 ) ) ), 
-            //     'test', // this name isn't really important
-            //     true    // print generated code to developers console
-            // ).then( node => {
-            //     gain.connect( node )
-            //     sine.start()
+            // // utilities.playWorklet( 
+            // //     cycle( add( 220, input('freqMod', 0, 0 ) ) ), 
+            // //     'test', // this name isn't really important
+            // //     true    // print generated code to developers console
+            // // ).then( node => {
+            // //     gain.connect( node )
+            // //     sine.start()
 
-            //     console.log( 'playing...' )
-            // })
+            // //     console.log( 'playing...' )
+            // // })
 
-            utilities.playWorklet( cycle( add( baseFrequency, mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) ) ) ))
+            // utilities.playWorklet( cycle( add( baseFrequency, mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) ) ) ))
         
             //window.removeEventListener( 'touchstart', click )
         }
