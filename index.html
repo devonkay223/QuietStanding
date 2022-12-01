@@ -176,7 +176,7 @@
 
             pattern = [ 440, 660, 880, 1100 ]
             idx = 0
-            frequency = param( pattern[ idx ] )
+            frequency = param( pattern[ idx ], 0, 440, 1200 )
 
             utilities.playWorklet( cycle( frequency ) )
 
