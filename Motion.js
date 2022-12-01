@@ -13,13 +13,13 @@ function getPerm() {
   } else {
     console.log("denied");
   }
-  pattern = [ 440, 660, 880, 1100 ]
-  idx = 0
-  index = param(pattern[idx], 0.1, 0, 0.95);
-  console.log(index.value);
-  index.value = 0.5;
-  console.log(index.value);
-  console.log(index);
+  // pattern = [ 440, 660, 880, 1100 ]
+  // idx = 0
+  // index = param(pattern[idx], 0.1, 0, 0.95);
+  // console.log(index.value);
+  // index.value = 0.5;
+  // console.log(index.value);
+  // console.log(index);
   
 }
 
@@ -86,7 +86,7 @@ const scaleNum = (number, fromInterval, toInterval) => {
     return toInterval[0] + newNumberPosition - 1;
  }
  return NaN;
-};
+}
 
 function test4() {
   console.log("test4");
@@ -110,27 +110,27 @@ function test4() {
 }
 
 function test3(){
-// param argumemnts: name, default value, min, max
-const carrierFrequency = param( 'freq', 440, 110, 990 )
-const modulationDepth  = param( 'mod', 5,0,100 )
+  // param argumemnts: name, default value, min, max
+  const carrierFrequency = param( 'freq', 440, 110, 990 )
+  const modulationDepth  = param( 'mod', 5,0,100 )
 
-const modulator = mul( cycle(4), modulationDepth )
-const modulatedFrequency = add( carrierFrequency, modulator )
+  const modulator = mul( cycle(4), modulationDepth )
+  const modulatedFrequency = add( carrierFrequency, modulator )
 
-utilities.playWorklet( cycle( modulatedFrequency ) )
+  utilities.playWorklet( cycle( modulatedFrequency ) )
 
-window.addEventListener('devicemotion', function(e) 
-  { 
+  window.addEventListener('devicemotion', function(e) 
+    { 
 
-    // can you change the rate of sampling on listeners?
-      x = parseFloat(e.acceleration.x).toFixed(3);
-      y = parseFloat(e.acceleration.y).toFixed(3);
-      z = parseFloat(e.acceleration.z).toFixed(3); 
+      // can you change the rate of sampling on listeners?
+        x = parseFloat(e.acceleration.x).toFixed(3)
+        y = parseFloat(e.acceleration.y).toFixed(3)
+        z = parseFloat(e.acceleration.z).toFixed(3)
 
-  
-  // get a frequency range of {110,990}
-  carrierFrequency.value = x
-  modulationDepth.value  = y
-  console.log(carrierFrequency.value, ", ", modulationDepth.value)
-}
+    
+    // get a frequency range of {110,990}
+    carrierFrequency.value = scaleNum(Math.abs(x)*1000, [0, 250], [110, 990])
+    modulationDepth.value  = scaleNum(Math.abs(y)*1000, [0, 250], [110, 990])
+    console.log(carrierFrequency.value, ", ", modulationDepth.value)
+  });
 }
