@@ -13,7 +13,6 @@ function getPerm() {
   } else {
     console.log("denied");
   }
-  console.log((0.01+0.2+0.3345)/3.00)
   // pattern = [ 440, 660, 880, 1100 ]
   // idx = 0
   // index = param(pattern[idx], 0.1, 0, 0.95);
