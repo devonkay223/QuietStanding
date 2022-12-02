@@ -83,11 +83,15 @@ function audio() {
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
     if (avg >= 0.25) {
-      index.value = vol - 0.01
+      if (vol>0){
+        index.value = vol - 0.01
+      }
     }
     else {
       scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
-      index.value = vol + 0.01
+      if (vol<1) {
+        index.value = vol + 0.01
+      }
     }
     console.log("vol: ", vol)
     console.log("value: ", index.value)
