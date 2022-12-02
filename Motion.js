@@ -13,17 +13,22 @@ function getPerm() {
   } else {
     console.log("denied");
   }
-    // const index = param( 'idx', 0, 0, 0.95)
-    // x = Math.abs(0.4356)
-    // y = Math.abs(-0.3928)
-    // z = Math.abs(-0.243543)
+    const index = param( 'idx', 0, 0, 0.95)
+    x = Math.abs(0.4356)
+    y = Math.abs(-0.3928)
+    z = Math.abs(-0.243543)
 
-    // console.log(x, ", ", y, ", ",z)
-    // let avg = ((x+y+z)/3.00)
+    console.log(x, ", ", y, ", ",z)
+    let avg = ((x+y+z)/3.00)
     // console.log("avg: ", avg)
-    // //average data for chunks
-    // //set benchmarks for movement
-    // //perform linear smoothing between amplitude changes 
+    //average data for chunks
+    //set benchmarks for movement
+    //perform linear smoothing between amplitude changes
+    // index.value = index.value -1
+    // console.log("value: ", index.value)
+    // console.log("waapi value: ", index.waapi.value)
+    // index.waapi.value = index.waapi.value - 1 
+    // console.log("waapi value: ", index.waapi.value)
     // index.waapi.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
     // console.log("value: ", index.waapi.value)  
 }
@@ -58,6 +63,10 @@ function audio() {
   //add a loop here that grabs chunks of data 
   //dont want to call listener on every loop BUT dont want loop called on every motion event 
 
+  let avg = 0
+  let scaled = 0
+  let vol = 0.000
+
   //gradient up to .05 for sounds
   window.addEventListener('devicemotion', function(e) 
   { 
@@ -68,17 +77,19 @@ function audio() {
     z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
 
     console.log(x, ", ", y, ", ",z)
-    let avg = ((x+y+z)/3.00)
+    avg = ((x+y+z)/3.00)
     console.log("avg: ", avg)
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
     if (avg >= 0.25) {
-      index.value = 0
+      index.value = vol - 0.01
     }
     else {
-      index.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
+      scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
+      index.value = vol + 0.01
     }
+    console.log("vol: ", vol)
     console.log("value: ", index.value)
     console.log("waapi value: ", index.waapi.value)   
   });
