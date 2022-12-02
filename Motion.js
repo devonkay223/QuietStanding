@@ -1,4 +1,4 @@
-var x, y, z;
+var x, y, z, vol;
 
 function getPerm() {
   // feature detect
@@ -65,7 +65,6 @@ function audio() {
 
   let avg = 0
   let scaled = 0
-  let vol = 0.000
 
   //gradient up to .05 for sounds
   window.addEventListener('devicemotion', function(e) 
@@ -89,6 +88,7 @@ function audio() {
     }
     else {
       scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
+      console.log("scaled: ", scaled)
       if (vol<1) {
         index.value = vol + 0.01
       }
