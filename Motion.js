@@ -1,4 +1,5 @@
-var x, y, z, vol;
+var x, y, z;
+var vol =0;
 
 function getPerm() {
   // feature detect
@@ -83,14 +84,16 @@ function audio() {
     //perform linear smoothing between amplitude changes 
     if (avg >= 0.25) {
       if (vol>0){
-        index.value = vol - 0.01
+        vol = vol - 0.01
+        index.value = vol 
       }
     }
     else {
       scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
       console.log("scaled: ", scaled)
       if (vol<1) {
-        index.value = vol + 0.01
+        vol = vol + 0.01
+        index.value = vol
       }
     }
     console.log("vol: ", vol)
