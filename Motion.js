@@ -1,5 +1,5 @@
 var x, y, z;
-var vol =0.5;
+var vol =0;
 var prevAvg = 1;
 
 function getPerm() {
