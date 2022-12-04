@@ -91,7 +91,7 @@ function audio() {
     }else if ((vol < 1) && (avg < 0.2)) {
       //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
       console.log("scaled: ", scaled)
-      vol = vol + 0.001//(0.001 * scaled)
+      vol = vol + 0.0001//(0.001 * scaled)
       index.value = vol
     }
     prevAvg = avg
