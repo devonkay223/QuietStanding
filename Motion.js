@@ -1,7 +1,8 @@
 var x, y, z;
 var vol =0;
 var prevAvg = 1;
-var chunkCount, chunkAvg;
+var chunkCount= 0;
+var chunkAvg = 0;
 
 function getPerm() {
   // feature detect
