@@ -41,7 +41,7 @@ function audio() {
 
   // scale amplitude based on index value, re-assign
   // const portamento = slide( index, 1000 )
-  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, slide( index, 500 ) ) )
+  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, slide( index, 800 ) ) )
   // create carrier oscillator and modulate frequenc8
   //const carrier = cycle( add( baseFrequency, modulator ) )
   //utilities.playWorklet(modulator)
@@ -72,9 +72,9 @@ function audio() {
       chunkAvg = a + avg;
       // console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
 
-      if (chunkCount==20) {
+      if (chunkCount==100) {
         chunkCount = 0 
-        chunkAvg = chunkAvg / 20;
+        chunkAvg = chunkAvg / 100;
         console.log("chunkAvg: ", chunkAvg);
         if ((((chunkAvg - 0.005) > prevAvg) || ((chunkAvg >= 0.2) && (chunkAvg > 0.065))) && (vol > 0)){
 
