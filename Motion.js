@@ -50,7 +50,7 @@ function audio() {
   //dont want to call listener on every loop BUT dont want loop called on every motion event 
 
   let avg = 0
-  let scaled = 0
+  //let scaled = 0
 
   //gradient up to .05 for sounds
   window.addEventListener('devicemotion', function(e) 
