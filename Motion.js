@@ -34,7 +34,7 @@ function audio() {
   // const ctx = utilities.ctx
   const baseFrequency = 80
   const c2m = 1.4
-  const index = param( 'idx',0, 0, 1)
+  const index = param( 'idx',0.001, 0.001, 1)
   console.log("in audio")
   // create our oscillator for modulation
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
@@ -76,7 +76,7 @@ function audio() {
         chunkCount = 0 
         chunkAvg = chunkAvg / 100;
         console.log("chunkAvg: ", chunkAvg);
-        if ((((chunkAvg - 0.005) > prevAvg) || ((chunkAvg >= 0.2) && (chunkAvg > 0.065))) && (vol > 0)){
+        if ((((chunkAvg - 0.005) > prevAvg) || ((chunkAvg >= 0.2) && (chunkAvg > 0.065))) && (vol > 0.001)){
 
           //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
           vol = vol - 0.01 //(0.001 * scaled)
@@ -86,6 +86,9 @@ function audio() {
           //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
           // console.log("scaled: ", scaled)
           vol = vol + 0.01//(0.001 * scaled)
+          if (vol ==0) {
+            vol = 0.001
+          }
           node.idx = vol
           console.log("vol up: ", vol);
         }
