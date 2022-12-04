@@ -3,6 +3,7 @@ var vol =0;
 var prevAvg = 1;
 var chunkCount= 0;
 var chunkAvg = 0;
+var up = 1; 
 
 function getPerm() {
   // feature detect
@@ -61,32 +62,44 @@ function audio() {
     y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
     z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
 
-    console.log(x, ", ", y, ", ",z)
-    avg = ((x+y+z)/3.00)
-    chunkCount = chunkCount + 1;
-    let a = chunkAvg
-    chunkAvg = a + avg;
-    console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
+    if (vol >= 1) {
+      up =0
+    }
+    if (vol <=0 ){
+      up =1
+    }
+    if (up ==1 ) {
+      vol = vol + 0.001
+    } else {
+      vol = vol - 0.001
+    }
 
-    if (chunkCount==20) {
-      chunkCount = 0 
-      chunkAvg = chunkAvg / 20;
+    // console.log(x, ", ", y, ", ",z)
+    // avg = ((x+y+z)/3.00)
+    // chunkCount = chunkCount + 1;
+    // let a = chunkAvg
+    // chunkAvg = a + avg;
+    // console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
 
-      if (((chunkAvg > prevAvg) || (chunkAvg >= 0.2)) && (vol > 0)){
+    // if (chunkCount==20) {
+    //   chunkCount = 0 
+    //   chunkAvg = chunkAvg / 20;
 
-        //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-        vol = vol - 0.001 //(0.001 * scaled)
-        index.value = vol 
-        console.log("vol down: ", vol);
-      } else if ((vol < 1) && (avg < 0.2)) {
-        //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
-        // console.log("scaled: ", scaled)
-        vol = vol + 0.0005//(0.001 * scaled)
-        index.value = vol
-        console.log("vol up: ", vol);
-      }
-    prevAvg = chunkAvg
-    } 
+    //   if (((chunkAvg > prevAvg) || (chunkAvg >= 0.2)) && (vol > 0)){
+
+    //     //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+    //     vol = vol - 0.001 //(0.001 * scaled)
+    //     index.value = vol 
+    //     console.log("vol down: ", vol);
+    //   } else if ((vol < 1) && (avg < 0.2)) {
+    //     //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+    //     // console.log("scaled: ", scaled)
+    //     vol = vol + 0.001//(0.001 * scaled)
+    //     index.value = vol
+    //     console.log("vol up: ", vol);
+    //   }
+    // prevAvg = chunkAvg
+    // } 
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
