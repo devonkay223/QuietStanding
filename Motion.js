@@ -1,5 +1,5 @@
 var x, y, z;
-var vol =0;
+var vol =0.5;
 var prevAvg = 1;
 
 function getPerm() {
@@ -86,7 +86,7 @@ function audio() {
 
     if (((avg > prevAvg) || (avg >= 0.2)) && (vol >0)){
         //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-        vol = vol - 0.001 //(0.001 * scaled)
+        vol = vol - 0.0005 //(0.001 * scaled)
         index.value = vol 
     }else if ((vol < 1) && (avg < 0.2)) {
       //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
@@ -113,7 +113,7 @@ function audio() {
     // }
     console.log("vol: ", vol)
     console.log("value: ", index.value)
-    console.log("waapi value: ", index.waapi.value)   
+    // console.log("waapi value: ", index.waapi.value)   
   });
 }
 
