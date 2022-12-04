@@ -44,7 +44,7 @@ function audio() {
   const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, slide( index, 1000 ) ) )
   // create carrier oscillator and modulate frequency
   const carrier = cycle( add( baseFrequency, modulator ) )
-  utilities.playWorklet(modulator)
+  //utilities.playWorklet(modulator)
 
   console.log("playing audio")
 
@@ -53,9 +53,10 @@ function audio() {
 
   let avg = 0
   //let scaled = 0
+  //play(modulator)
 
   //gradient up to .05 for sounds
-  play( modulator ).then( node => {
+  utilities.playWorklet( modulator ).then( node => {
     window.addEventListener('devicemotion', function(e) 
     { 
       // console.log("motion")
