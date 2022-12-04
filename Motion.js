@@ -17,24 +17,6 @@ function getPerm() {
   } else {
     console.log("denied");
   }
-    const index = param( 'idx', 0, 0, 0.95)
-    x = Math.abs(0.4356)
-    y = Math.abs(-0.3928)
-    z = Math.abs(-0.243543)
-
-    console.log(x, ", ", y, ", ",z)
-    let avg = ((x+y+z)/3.00)
-    // console.log("avg: ", avg)
-    //average data for chunks
-    //set benchmarks for movement
-    //perform linear smoothing between amplitude changes
-    // index.value = index.value -1
-    // console.log("value: ", index.value)
-    // console.log("waapi value: ", index.waapi.value)
-    // index.waapi.value = index.waapi.value - 1 
-    // console.log("waapi value: ", index.waapi.value)
-    // index.waapi.value = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
-    // console.log("value: ", index.waapi.value)  
 }
 
 window.onload = ()=> {
@@ -82,12 +64,13 @@ function audio() {
     console.log(x, ", ", y, ", ",z)
     avg = ((x+y+z)/3.00)
     chunkCount = chunkCount + 1;
-    chunkAvg = chunkAvg + avg;
-    console.log(chunkCount,"avg: ", avg)
+    let a = chunkAvg
+    chunkAvg = a + avg;
+    console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
 
     if (chunkCount==20) {
       chunkCount = 0 
-      chunkAvg = (chunkAvg + avg)/ 20;
+      chunkAvg = chunkAvg / 20;
 
       if (((chunkAvg > prevAvg) || (chunkAvg >= 0.2)) && (vol > 0)){
 
