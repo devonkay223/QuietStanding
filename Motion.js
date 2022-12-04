@@ -29,6 +29,7 @@ window.onload = ()=> {
 }
 
 
+
 function audio() {
   // const ctx = utilities.ctx
   const baseFrequency = 80
@@ -39,8 +40,8 @@ function audio() {
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
 
   // scale amplitude based on index value, re-assign
-  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, index ) )
-
+  const portamento = slide( index, 1000 )
+  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, portamento ) )
   // create carrier oscillator and modulate frequency
   const carrier = cycle( add( baseFrequency, modulator ) )
   utilities.playWorklet(modulator)
@@ -62,44 +63,35 @@ function audio() {
     y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
     z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
 
-    if (vol >= 1) {
-      up =0
-    }
-    if (vol <=0 ){
-      up =1
-    }
-    if (up ==1 ) {
-      vol = vol + 0.001
-    } else {
-      vol = vol - 0.001
-    }
+    console.log(x, ", ", y, ", ",z)
+    avg = ((x+y+z)/3.00)
+    chunkCount = chunkCount + 1;
+    let a = chunkAvg
+    chunkAvg = a + avg;
+    console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
 
-    // console.log(x, ", ", y, ", ",z)
-    // avg = ((x+y+z)/3.00)
-    // chunkCount = chunkCount + 1;
-    // let a = chunkAvg
-    // chunkAvg = a + avg;
-    // console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
+    if (chunkCount==20) {
+      chunkCount = 0 
+      chunkAvg = chunkAvg / 20;
 
-    // if (chunkCount==20) {
-    //   chunkCount = 0 
-    //   chunkAvg = chunkAvg / 20;
+      if (((chunkAvg > prevAvg) || (chunkAvg >= 0.2)) && (vol > 0)){
 
-    //   if (((chunkAvg > prevAvg) || (chunkAvg >= 0.2)) && (vol > 0)){
+        //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+        vol = vol - 0.001 //(0.001 * scaled)
+        index.value = vol 
+        console.log("vol down: ", vol);
+      } else if ((vol < 1) && (avg < 0.2)) {
+        //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+        // console.log("scaled: ", scaled)
+        vol = vol + 0.001//(0.001 * scaled)
+        index.value = vol
+        console.log("vol up: ", vol);
+      }
+    prevAvg = chunkAvg
+    } 
 
-    //     //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-    //     vol = vol - 0.001 //(0.001 * scaled)
-    //     index.value = vol 
-    //     console.log("vol down: ", vol);
-    //   } else if ((vol < 1) && (avg < 0.2)) {
-    //     //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
-    //     // console.log("scaled: ", scaled)
-    //     vol = vol + 0.001//(0.001 * scaled)
-    //     index.value = vol
-    //     console.log("vol up: ", vol);
-    //   }
-    // prevAvg = chunkAvg
-    // } 
+
+
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
