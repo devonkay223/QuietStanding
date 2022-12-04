@@ -1,5 +1,6 @@
 var x, y, z;
 var vol =0;
+var prevAvg = 1;
 
 function getPerm() {
   // feature detect
@@ -82,20 +83,34 @@ function audio() {
     //average data for chunks
     //set benchmarks for movement
     //perform linear smoothing between amplitude changes 
-    if (avg >= 0.25) {
-      if (vol>0){
-        vol = vol - 0.01
+
+    if (((avg > prevAvg) || (avg >= 0.2)) && (vol >0)){
+        //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+        vol = vol - 0.001 //(0.001 * scaled)
         index.value = vol 
-      }
-    }
-    else {
-      scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])/100
+    }else if ((vol < 1) && (avg < 0.2)) {
+      //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
       console.log("scaled: ", scaled)
-      if (vol<1) {
-        vol = vol + 0.01
-        index.value = vol
-      }
+      vol = vol + 0.001//(0.001 * scaled)
+      index.value = vol
     }
+    prevAvg = avg
+
+    // if (avg >= 0.25) {
+    //   if (vol>0){
+    //     scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+    //     vol = vol - (0.001 * scaled)
+    //     index.value = vol 
+    //   }
+    // }
+    // else {
+    //   scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+    //   console.log("scaled: ", scaled)
+    //   if (vol<1) {
+    //     vol = vol + (0.001 * scaled)
+    //     index.value = vol
+    //   }
+    // }
     console.log("vol: ", vol)
     console.log("value: ", index.value)
     console.log("waapi value: ", index.waapi.value)   
