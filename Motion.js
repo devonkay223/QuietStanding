@@ -55,78 +55,80 @@ function audio() {
   //let scaled = 0
 
   //gradient up to .05 for sounds
-  window.addEventListener('devicemotion', function(e) 
-  { 
-    // console.log("motion")
-    // can you change the rate of sampling on listeners?
-    x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
-    y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
-    z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
+  play( modulator ).then( node => {
+    window.addEventListener('devicemotion', function(e) 
+    { 
+      // console.log("motion")
+      // can you change the rate of sampling on listeners?
+      x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
+      y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
+      z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
 
-    console.log(x, ", ", y, ", ",z)
-    avg = ((x+y+z)/3.00)
-    chunkCount = chunkCount + 1;
-    let a = chunkAvg
-    chunkAvg = a + avg;
-    console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
+      console.log(x, ", ", y, ", ",z)
+      avg = ((x+y+z)/3.00)
+      chunkCount = chunkCount + 1;
+      let a = chunkAvg
+      chunkAvg = a + avg;
+      console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
 
-    if (chunkCount==20) {
-      chunkCount = 0 
-      chunkAvg = chunkAvg / 20;
+      if (chunkCount==20) {
+        chunkCount = 0 
+        chunkAvg = chunkAvg / 20;
 
-      if (((chunkAvg > prevAvg) || (chunkAvg >= 0.2)) && (vol > 0)){
+        if (((chunkAvg > prevAvg) || (chunkAvg >= 0.2)) && (vol > 0)){
 
-        //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-        vol = vol - 0.001 //(0.001 * scaled)
-        index.value = vol 
-        console.log("vol down: ", vol);
-      } else if ((vol < 1) && (avg < 0.2)) {
-        //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
-        // console.log("scaled: ", scaled)
-        vol = vol + 0.001//(0.001 * scaled)
-        index.value = vol
-        console.log("vol up: ", vol);
-      }
-    prevAvg = chunkAvg
-    } 
+          //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+          vol = vol - 0.001 //(0.001 * scaled)
+          node.idx = vol 
+          console.log("vol down: ", vol);
+        } else if ((vol < 1) && (avg < 0.2)) {
+          //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+          // console.log("scaled: ", scaled)
+          vol = vol + 0.001//(0.001 * scaled)
+          node.idx = vol
+          console.log("vol up: ", vol);
+        }
+      prevAvg = chunkAvg
+      } 
 
 
 
-    //average data for chunks
-    //set benchmarks for movement
-    //perform linear smoothing between amplitude changes 
+      //average data for chunks
+      //set benchmarks for movement
+      //perform linear smoothing between amplitude changes 
 
-    // if (((avg> prevAvg) || (avg >= 0.2)) && (vol >0)){
-    //     //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-    //     vol = vol - 0.001 //(0.001 * scaled)
-    //     index.value = vol 
-    // }else if ((vol < 1) && (avg < 0.2)) {
-    //   //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
-    //   // console.log("scaled: ", scaled)
-    //   vol = vol + 0.0005//(0.001 * scaled)
-    //   index.value = vol
-    // }
-    // prevAvg = avg
+      // if (((avg> prevAvg) || (avg >= 0.2)) && (vol >0)){
+      //     //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+      //     vol = vol - 0.001 //(0.001 * scaled)
+      //     index.value = vol 
+      // }else if ((vol < 1) && (avg < 0.2)) {
+      //   //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+      //   // console.log("scaled: ", scaled)
+      //   vol = vol + 0.0005//(0.001 * scaled)
+      //   index.value = vol
+      // }
+      // prevAvg = avg
 
-    // if (avg >= 0.25) {
-    //   if (vol>0){
-    //     scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-    //     vol = vol - (0.001 * scaled)
-    //     index.value = vol 
-    //   }
-    // }
-    // else {
-    //   scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
-    //   console.log("scaled: ", scaled)
-    //   if (vol<1) {
-    //     vol = vol + (0.001 * scaled)
-    //     index.value = vol
-    //   }
-    // }
-    // console.log("vol: ", vol)
-    //console.log("value: ", index.value)
-    // console.log("waapi value: ", index.waapi.value)   
-  });
+      // if (avg >= 0.25) {
+      //   if (vol>0){
+      //     scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+      //     vol = vol - (0.001 * scaled)
+      //     index.value = vol 
+      //   }
+      // }
+      // else {
+      //   scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+      //   console.log("scaled: ", scaled)
+      //   if (vol<1) {
+      //     vol = vol + (0.001 * scaled)
+      //     index.value = vol
+      //   }
+      // }
+      // console.log("vol: ", vol)
+      //console.log("value: ", index.value)
+      // console.log("waapi value: ", index.waapi.value)   
+    });
+  })
 }
 
 const scaleNum = (number, fromInterval, toInterval) => {
