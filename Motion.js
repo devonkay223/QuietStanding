@@ -86,11 +86,11 @@ function audio() {
 
     if (((avg > prevAvg) || (avg >= 0.2)) && (vol >0)){
         //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-        vol = vol - 0.0005 //(0.001 * scaled)
+        vol = vol - 0.001 //(0.001 * scaled)
         index.value = vol 
     }else if ((vol < 1) && (avg < 0.2)) {
       //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
-      console.log("scaled: ", scaled)
+      // console.log("scaled: ", scaled)
       vol = vol + 0.0005//(0.001 * scaled)
       index.value = vol
     }
@@ -112,7 +112,7 @@ function audio() {
     //   }
     // }
     console.log("vol: ", vol)
-    console.log("value: ", index.value)
+    //console.log("value: ", index.value)
     // console.log("waapi value: ", index.waapi.value)   
   });
 }
