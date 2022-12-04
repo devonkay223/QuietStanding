@@ -1,6 +1,7 @@
 var x, y, z;
 var vol =0;
 var prevAvg = 1;
+var chunkCount, chunkAvg;
 
 function getPerm() {
   // feature detect
@@ -79,22 +80,41 @@ function audio() {
 
     console.log(x, ", ", y, ", ",z)
     avg = ((x+y+z)/3.00)
-    console.log("avg: ", avg)
-    //average data for chunks
-    //set benchmarks for movement
-    //perform linear smoothing between amplitude changes 
+    chunkCount = chunkCount + 1;
+    chunkAvg = chunkAvg + avg;
+    console.log(chunkCount,"avg: ", avg)
 
-    if (((avg > prevAvg) || (avg >= 0.2)) && (vol >0)){
+    if (chunkCount==20)
+      chunkCount = 0 
+      chunkAvg = (chunkAvg + avg)/ 20;
+
+      if (((chunkAvg > prevAvg) || (chunkAvg >= 0.2)) && (vol >0)){
         //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
         vol = vol - 0.001 //(0.001 * scaled)
         index.value = vol 
-    }else if ((vol < 1) && (avg < 0.2)) {
+      }else if ((vol < 1) && (avg < 0.2)) {
       //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
       // console.log("scaled: ", scaled)
       vol = vol + 0.0005//(0.001 * scaled)
       index.value = vol
     }
-    prevAvg = avg
+    prevAvg = chunkAvg
+  // }
+    //average data for chunks
+    //set benchmarks for movement
+    //perform linear smoothing between amplitude changes 
+
+    // if (((avg> prevAvg) || (avg >= 0.2)) && (vol >0)){
+    //     //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+    //     vol = vol - 0.001 //(0.001 * scaled)
+    //     index.value = vol 
+    // }else if ((vol < 1) && (avg < 0.2)) {
+    //   //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+    //   // console.log("scaled: ", scaled)
+    //   vol = vol + 0.0005//(0.001 * scaled)
+    //   index.value = vol
+    // }
+    // prevAvg = avg
 
     // if (avg >= 0.25) {
     //   if (vol>0){
@@ -111,7 +131,7 @@ function audio() {
     //     index.value = vol
     //   }
     // }
-    console.log("vol: ", vol)
+    // console.log("vol: ", vol)
     //console.log("value: ", index.value)
     // console.log("waapi value: ", index.waapi.value)   
   });
