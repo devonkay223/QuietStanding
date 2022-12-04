@@ -40,8 +40,8 @@ function audio() {
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
 
   // scale amplitude based on index value, re-assign
-  const portamento = slide( index, 1000 )
-  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, portamento ) )
+  // const portamento = slide( index, 1000 )
+  const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, slide( index, 1000 ) ) )
   // create carrier oscillator and modulate frequency
   const carrier = cycle( add( baseFrequency, modulator ) )
   utilities.playWorklet(modulator)
