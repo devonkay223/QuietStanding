@@ -72,10 +72,11 @@ function audio() {
       chunkAvg = a + avg;
       // console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
 
-      if (chunkCount==100) {
+      if (chunkCount==50) {
         chunkCount = 0 
-        chunkAvg = chunkAvg / 100;
+        chunkAvg = chunkAvg / 50;
         console.log("chunkAvg: ", chunkAvg);
+        console.log("vol before: ", vol);
         if ((((chunkAvg - 0.005) > prevAvg) || ((chunkAvg >= 0.2) && (chunkAvg > 0.065))) && (vol > 0.001)){
 
           //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
