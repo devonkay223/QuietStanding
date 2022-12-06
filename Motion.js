@@ -348,3 +348,83 @@ function audio2() {
   isAppInit = true;
 }
   
+
+function audio3() {
+  // if (isAppInit) {
+  //   return;
+  // }
+
+
+  // create web audio api context
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = new AudioContext();
+
+  // create Oscillator and gain node
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+
+  // connect oscillator to gain node to speakers
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  const maxFreq = 6000;
+  const maxVol = 0.2;
+  const initialVol = 0;
+
+  // set options for the oscillator
+//   oscillator.detune.value = 100; // value in cents
+  oscillator.start(0);
+
+  oscillator.onended = function () {
+    console.log("Your tone has now stopped playing!");
+  };
+
+  gainNode.gain.value = initialVol;
+  gainNode.gain.minValue = initialVol;
+  gainNode.gain.maxValue = initialVol;
+
+  // Mouse pointer coordinates
+  
+  let avg = 0;
+  window.onmousemove = function( e ) { 
+    avg = e.clientY 
+
+   
+    // console.log("motion")
+    // // can you change the rate of sampling on listeners?
+    // x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
+    // y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
+    // z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
+
+    // console.log(x, ", ", y, ", ",z)
+    // avg = ((x+y+z)/3.00)
+    chunkCount = chunkCount + 1;
+    let a = chunkAvg
+    chunkAvg = a + avg;
+    // console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
+
+    if (chunkCount==20) {
+      chunkCount = 0 
+      chunkAvg = chunkAvg / 20;
+      console.log("chunkAvg: ", chunkAvg);
+      console.log("vol before: ", vol);
+      if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.2)) && (chunkAvg > 0.065)) && (vol > 0)) {
+
+        //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+        vol = vol - 0.01 //(0.001 * scaled)
+        gainNode.gain.value  = vol 
+        console.log("vol down: ", vol);
+      } else if ((vol < 1) && (avg < 0.2)) {
+        //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+        // console.log("scaled: ", scaled)
+        vol = vol + 0.01  //(0.001 * scaled)
+        gainNode.gain.value  = vol
+        console.log("vol up: ", vol);
+      }
+      chunkAvg = 0;
+      prevAvg = chunkAvg;
+    } 
+  }
+  isAppInit = true;
+}
+  
