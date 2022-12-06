@@ -317,9 +317,12 @@ function audio2() {
 
         //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
         vol = vol - 0.01 //(0.001 * scaled)
+        if (vol < 0) {
+          vol =0
+        }
         gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
         gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);
+        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);
         console.log("vol down: ", vol);
       } else if ((vol < 1) && (avg < 0.2)) {
         //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
@@ -328,7 +331,7 @@ function audio2() {
         // gainNode.gain.value  = vol
         gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
         gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);
+        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);
         console.log("vol up: ", vol);
       }
       chunkAvg = 0;
