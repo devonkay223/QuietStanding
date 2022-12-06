@@ -34,21 +34,19 @@ function audio() {
   // const ctx = utilities.ctx
   const baseFrequency = 440
   // const c2m = 1.4
-  const index = param( 'idx',0.001, 0.001, 1)
-  console.log("in audio")
+  const index = param( 'idx',0,0, 1)
+
   // create our oscillator for modulation
   // const  modulator = cycle( mul( baseFrequency, c2m ) )
 
   // scale amplitude based on index value, re-assign
   // const portamento = slide( index, 1000 )
   // const modulator = mul( cycle( mul( baseFrequency, c2m ) ), mul( baseFrequency, slide( index, 800 ) ) )
-  const modulator = add( cycle( baseFrequency ), mul(slide( index, 1000 ), 0) )
+  const modulator = mul( cycle( baseFrequency ), slide( index, 1000 ) )
   // const modulator = cycle(baseFrequency);
   // create carrier oscillator and modulate frequenc8
   //const carrier = cycle( add( baseFrequency, modulator ) )
   //utilities.playWorklet(modulator)
-
-  console.log("playing audio")
 
   //add a loop here that grabs chunks of data 
   //dont want to call listener on every loop BUT dont want loop called on every motion event 
@@ -79,15 +77,12 @@ function audio() {
         chunkAvg = chunkAvg / 20;
         console.log("chunkAvg: ", chunkAvg);
         console.log("vol before: ", vol);
-        if ((((chunkAvg - 0.005) > prevAvg) || ((chunkAvg >= 0.2) && (chunkAvg > 0.065))) && (vol > 0.001)){
+        if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.2)) && (chunkAvg > 0.065)) && (vol > 0)) {
 
           //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
           vol = vol - 0.01 //(0.001 * scaled)
           node.idx = vol 
           console.log("vol down: ", vol);
-          if (vol ==0) {
-            vol = 0.001
-          }
         } else if ((vol < 1) && (avg < 0.2)) {
           //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
           // console.log("scaled: ", scaled)
@@ -95,7 +90,8 @@ function audio() {
           node.idx = vol
           console.log("vol up: ", vol);
         }
-      prevAvg = chunkAvg
+        chunkAvg = 0
+        prevAvg = chunkAvg
       } 
 
 
