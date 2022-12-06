@@ -207,6 +207,143 @@ function test2() {
   utilities.playWorklet(modulator)
 }
 
-function test8() {
-  utilities.playWorklet(cycle(440));
+// function test8() {
+//   utilities.playWorklet(cycle(440));
+// }
+
+
+
+// function init() {
+//   if (isAppInit) {
+//     return;
+//   }
+
+//   // create web audio api context
+//   const AudioContext = window.AudioContext || window.webkitAudioContext;
+//   const audioCtx = new AudioContext();
+
+//   // create Oscillator and gain node
+//   const oscillator = audioCtx.createOscillator();
+//   const gainNode = audioCtx.createGain();
+
+//   // connect oscillator to gain node to speakers
+//   oscillator.connect(gainNode);
+//   gainNode.connect(audioCtx.destination);
+
+//   const maxFreq = 6000;
+//   const maxVol = 0.2;
+//   const initialVol = 0.001;
+
+//   // set options for the oscillator
+// //   oscillator.detune.value = 100; // value in cents
+//   oscillator.start(0);
+
+//   oscillator.onended = function () {
+//     console.log("Your tone has now stopped playing!");
+//   };
+
+//   gainNode.gain.value = initialVol;
+//   gainNode.gain.minValue = initialVol;
+//   gainNode.gain.maxValue = initialVol;
+
+//   // Mouse pointer coordinates
+//   let loudness;
+
+//   // Get new mouse pointer coordinates when mouse is moved
+//   // then set new gain and pitch values
+//   document.addEventListener('devicemotion', (event) => {updatePage(event)});
+
+//   function updatePage(e) {
+//     let x = e.acceleration.x;
+//     let y = e.acceleration.y;
+//     let z = e.acceleration.z;
+//     let speed = Math.sqrt(x*x + y*y + z*z);
+//     if (speed > 0.05) {
+//         loudness = Math.max(0.0, loudness - 0.01);
+//     }
+//     else {
+//         loudness = Math.min(1.0, loudness + 0.01)
+//     }
+//     oscillator.frequency.value = 440;
+//     gainNode.gain.value = speed * maxVol;
+//   }
+
+//   isAppInit = true;
+// }
+
+function audio2() {
+  if (isAppInit) {
+    return;
+  }
+
+  // create web audio api context
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = new AudioContext();
+
+  // create Oscillator and gain node
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+
+  // connect oscillator to gain node to speakers
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  const maxFreq = 6000;
+  const maxVol = 0.2;
+  const initialVol = 0;
+
+  // set options for the oscillator
+//   oscillator.detune.value = 100; // value in cents
+  oscillator.start(0);
+
+  oscillator.onended = function () {
+    console.log("Your tone has now stopped playing!");
+  };
+
+  gainNode.gain.value = initialVol;
+  gainNode.gain.minValue = initialVol;
+  gainNode.gain.maxValue = initialVol;
+
+  // Mouse pointer coordinates
+  
+  let avg = 0;
+
+  window.addEventListener('devicemotion', function(e) { 
+    // console.log("motion")
+    // can you change the rate of sampling on listeners?
+    x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
+    y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
+    z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
+
+    console.log(x, ", ", y, ", ",z)
+    avg = ((x+y+z)/3.00)
+    chunkCount = chunkCount + 1;
+    let a = chunkAvg
+    chunkAvg = a + avg;
+    // console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
+
+    if (chunkCount==20) {
+      chunkCount = 0 
+      chunkAvg = chunkAvg / 20;
+      console.log("chunkAvg: ", chunkAvg);
+      console.log("vol before: ", vol);
+      if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.2)) && (chunkAvg > 0.065)) && (vol > 0)) {
+
+        //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
+        vol = vol - 0.01 //(0.001 * scaled)
+        gainNode.gain.value  = vol 
+        console.log("vol down: ", vol);
+      } else if ((vol < 1) && (avg < 0.2)) {
+        //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
+        // console.log("scaled: ", scaled)
+        vol = vol + 0.01  //(0.001 * scaled)
+        gainNode.gain.value  = vol
+        console.log("vol up: ", vol);
+      }
+      chunkAvg = 0;
+      prevAvg = chunkAvg;
+    } 
+  });
+  isAppInit = true;
 }
+  
