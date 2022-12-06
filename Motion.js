@@ -272,9 +272,10 @@ function test2() {
 // }
 
 function audio2() {
-  if (isAppInit) {
-    return;
-  }
+  // if (isAppInit) {
+  //   return;
+  // }
+
 
   // create web audio api context
   const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -308,8 +309,8 @@ function audio2() {
   
   let avg = 0;
 
-  window.addEventListener('devicemotion', function(e) { 
-    // console.log("motion")
+  window.addEventListener('devicemotion', (e) => { 
+    console.log("motion")
     // can you change the rate of sampling on listeners?
     x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
     y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
