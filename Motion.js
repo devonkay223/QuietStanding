@@ -387,7 +387,7 @@ function audio3() {
   
   let avg = 0;
   window.onmousemove = function( e ) { 
-    avg = e.clientY 
+    avg = ScaleNum(e.clientY, [0, 1000], [0, 0.5])
 
    
     // console.log("motion")
