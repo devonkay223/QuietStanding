@@ -317,17 +317,17 @@ function audio2() {
 
         //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
         vol = vol - 0.01 //(0.001 * scaled)
-        //gainNode.gain.value  = vol 
-        gainNode.gain.setValueAtTime(gainNode.gain.value , context.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(vol, context.currentTime + 2);
-        console.log("vol down: ", vol);
+        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);console.log("vol down: ", vol);
       } else if ((vol < 1) && (avg < 0.2)) {
         //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
         // console.log("scaled: ", scaled)
         vol = vol + 0.01  //(0.001 * scaled)
         // gainNode.gain.value  = vol
-        gainNode.gain.setValueAtTime(gainNode.gain.value , context.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(vol, context.currentTime + 2);
+        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);
         console.log("vol up: ", vol);
       }
       chunkAvg = 0;
@@ -401,13 +401,17 @@ function audio3() {
 
         //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
         vol = vol - 0.01 //(0.001 * scaled)
-        gainNode.gain.value  = vol 
+        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);
         console.log("vol down: ", vol);
       } else if ((vol < 1) && (avg < 0.2)) {
         //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
         // console.log("scaled: ", scaled)
         vol = vol + 0.01  //(0.001 * scaled)
-        gainNode.gain.value  = vol
+        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);
         console.log("vol up: ", vol);
       }
       chunkAvg = 0;
