@@ -134,21 +134,6 @@ function audio() {
   })
 }
 
-const scaleNum = (number, fromInterval, toInterval) => {
-  if(number >= fromInterval[0] && number <= fromInterval[1]) {
-    let oldIntervalUnits = fromInterval[1] - fromInterval[0] + 1;
-    let newIntervalUnits = toInterval[1] - toInterval[0] + 1;
-
-    let oldNumberPosition = -fromInterval[0] + number + 1;
-
-    let percentage = oldNumberPosition / oldIntervalUnits;
-    
-    let newNumberPosition = Math.round(percentage * newIntervalUnits);
-
-    return toInterval[0] + newNumberPosition - 1;
- }
- return NaN;
-}
 
 function test4() {
   console.log("test4");
@@ -387,7 +372,7 @@ function audio3() {
   
   let avg = 0;
   window.onmousemove = function( e ) { 
-    avg = ScaleNum(e.clientY, [0, 1000], [0, 0.5])
+    avg = scaleNum(e.clientY, [0, 1000], [0, 0.5])
 
    
     // console.log("motion")
@@ -428,3 +413,18 @@ function audio3() {
   isAppInit = true;
 }
   
+const scaleNum = (number, fromInterval, toInterval) => {
+  if(number >= fromInterval[0] && number <= fromInterval[1]) {
+    let oldIntervalUnits = fromInterval[1] - fromInterval[0] + 1;
+    let newIntervalUnits = toInterval[1] - toInterval[0] + 1;
+
+    let oldNumberPosition = -fromInterval[0] + number + 1;
+
+    let percentage = oldNumberPosition / oldIntervalUnits;
+    
+    let newNumberPosition = Math.round(percentage * newIntervalUnits);
+
+    return toInterval[0] + newNumberPosition - 1;
+ }
+ return NaN;
+}
