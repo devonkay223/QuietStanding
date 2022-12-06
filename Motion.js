@@ -295,13 +295,13 @@ function audio2() {
   let avg = 0;
 
   window.addEventListener('devicemotion', (e) => { 
-    console.log("motion")
+    //console.log("motion")
     // can you change the rate of sampling on listeners?
     x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
     y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
     z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
 
-    console.log(x, ", ", y, ", ",z)
+   // console.log(x, ", ", y, ", ",z)
     avg = ((x+y+z)/3.00)
     chunkCount = chunkCount + 1;
     let a = chunkAvg
@@ -319,7 +319,8 @@ function audio2() {
         vol = vol - 0.01 //(0.001 * scaled)
         gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
         gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);console.log("vol down: ", vol);
+        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);
+        console.log("vol down: ", vol);
       } else if ((vol < 1) && (avg < 0.2)) {
         //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
         // console.log("scaled: ", scaled)
