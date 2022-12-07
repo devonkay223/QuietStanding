@@ -6,31 +6,22 @@ var chunkAvg = 0;
 var up = 1; 
 
 function getPerm() {
-  // feature detect
-  if (typeof DeviceMotionEvent.requestPermission === 'function') {
-    DeviceMotionEvent.requestPermission()
-      .then(permissionState => {
-        if (permissionState === 'granted') {
-          console.log("granted");
-          window.location.replace('https://devonkay223.github.io/QuietStanding/Audio.html')
-        }
-      })
-      .catch(console.error);
-  } else {
-    console.log("denied");
-  }
+    // feature detect
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            console.log("granted");
+            window.location.replace('https://devonkay223.github.io/QuietStanding/Audio.html')
+          }
+        })
+        .catch(console.error);
+    } else {
+      console.log("denied");
+    }
 }
 
-window.onload = ()=> {
-  // genish.js
-  // genish.export( window );
-  // audio context will be stored in utilities.ctx
-  // utilities.createContext();
 
-  //TEST does this work on load???
-  // audio3()
-  //TEST do i need motion permission on the same page or does this work?
-}
 
 function nextPage() {
   window.location.replace('http://127.0.0.1:8887/Audio.html');
@@ -267,7 +258,7 @@ function audio2() {
   // if (isAppInit) {
   //   return;
   // }
-  window.open("https://devonkay223.github.io/QuietStanding/BackPlate.html", '_blank');
+  // window.open("https://devonkay223.github.io/QuietStanding/BackPlate.html", '_blank');
 
   console.log("in audio")
 
