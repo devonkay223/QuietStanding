@@ -320,7 +320,7 @@ function audio2() {
       console.log("chunkAvg: ", chunkAvg);
       console.log("vol before: ", vol);
       if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.15)) && (chunkAvg > 0.065)) && (vol > 0)) {
-        vol = vol - 0.01 
+        vol = vol - 0.05 
         if (vol < 0) {
           vol =0
         }
@@ -329,7 +329,7 @@ function audio2() {
         gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);
         console.log("vol down: ", vol);
       } else if ((vol < 1) && (avg < 0.2)) {
-        vol = vol + 0.01;
+        vol = vol + 0.05;
         gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
         gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);
