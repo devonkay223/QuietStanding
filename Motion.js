@@ -46,8 +46,8 @@ function audio2() {
   // const maxVol = 1;
   // const initialVol = 0;
 
-  let freqList= [140, 150, 160, 170, 180, 190, 200]
-  let freq= freqList[getRandomInt(7)]
+  let freqList= [150, 160, 170, 180, 190, 200, 210, 220]
+  let freq= freqList[getRandomInt(8)]
   console.log("frequency: ", freq);
 
   // set options for the oscillator
