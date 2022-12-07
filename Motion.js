@@ -28,7 +28,7 @@ window.onload = ()=> {
   // utilities.createContext();
 
   //TEST does this work on load???
-  audio3()
+  // audio3()
   //TEST do i need motion permission on the same page or does this work?
 }
 
