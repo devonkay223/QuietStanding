@@ -23,13 +23,6 @@ function getPerm() {
 
 
 function audio2() {
-  // if (isAppInit) {
-  //   return;
-  // }
-  // window.open("https://devonkay223.github.io/QuietStanding/BackPlate.html", '_blank');
-
-  console.log("in audio")
-
   // create web audio api context
   const AudioContext = window.AudioContext || window.webkitAudioContext;
   const audioCtx = new AudioContext();
@@ -102,91 +95,6 @@ function audio2() {
   isAppInit = true;
 }
   
-
-function audio3() {
-  // if (isAppInit) {
-  //   return;
-  // }
-
-
-  // create web audio api context
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  const audioCtx = new AudioContext();
-
-  // create Oscillator and gain node
-  const oscillator = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-
-  // connect oscillator to gain node to speakers
-  oscillator.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-
-  const maxFreq = 6000;
-  const maxVol = 0.2;
-  const initialVol = 0;
-
-  // set options for the oscillator
-//   oscillator.detune.value = 100; // value in cents
-  oscillator.frequency.setValueAtTime(250, audioCtx.currentTime); // value in hertz
-  oscillator.start(0);
-
-  oscillator.onended = function () {
-    console.log("Your tone has now stopped playing!");
-  };
-
-  gainNode.gain.value = initialVol;
-  gainNode.gain.minValue = initialVol;
-  gainNode.gain.maxValue = initialVol;
-
-  // Mouse pointer coordinates
-  
-  let avg = 0;
-  window.onmousemove = function( e ) { 
-    avg = scaleNum(e.clientY, [0, 1000], [0, 0.5])
-
-   
-    // console.log("motion")
-    // // can you change the rate of sampling on listeners?
-    // x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
-    // y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
-    // z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
-
-    // console.log(x, ", ", y, ", ",z)
-    // avg = ((x+y+z)/3.00)
-    chunkCount = chunkCount + 1;
-    let a = chunkAvg
-    chunkAvg = a + avg;
-    // console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
-
-    if (chunkCount==20) {
-      chunkCount = 0 
-      chunkAvg = chunkAvg / 20;
-      console.log("chunkAvg: ", chunkAvg);
-      console.log("vol before: ", vol);
-      if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.2)) && (chunkAvg > 0.065)) && (vol > 0)) {
-
-        //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-        vol = vol - 0.01 //(0.001 * scaled)
-        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
-        gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);
-        console.log("vol down: ", vol);
-      } else if ((vol < 1) && (avg < 0.2)) {
-        //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
-        // console.log("scaled: ", scaled)
-        vol = vol + 0.01  //(0.001 * scaled)
-        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
-        gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 2);
-        console.log("vol up: ", vol);
-      }
-      chunkAvg = 0;
-      prevAvg = chunkAvg;
-    } 
-  }
-  isAppInit = true;
-}
-  
 const scaleNum = (number, fromInterval, toInterval) => {
   if(number >= fromInterval[0] && number <= fromInterval[1]) {
     let oldIntervalUnits = fromInterval[1] - fromInterval[0] + 1;
@@ -208,36 +116,38 @@ function getRandomInt(max) {
 }
 
 
-// Create the root video element
-var video = document.createElement('video');
-video.setAttribute('loop', '');
-// Add some styles if needed
-video.setAttribute('style', 'position: fixed;');
+//Potential Solution to screens sleeping -- not in use rn
 
-// A helper to add sources to video
-function addSourceToVideo(element, type, dataURI) {
-    var source = document.createElement('source');
-    source.src = dataURI;
-    source.type = 'video/' + type;
-    element.appendChild(source);
-}
+// // Create the root video element
+// var video = document.createElement('video');
+// video.setAttribute('loop', '');
+// // Add some styles if needed
+// video.setAttribute('style', 'position: fixed;');
 
-// A helper to concat base64
-var base64 = function(mimeType, base64) {
-    return 'data:' + mimeType + ';base64,' + base64;
-};
+// // A helper to add sources to video
+// function addSourceToVideo(element, type, dataURI) {
+//     var source = document.createElement('source');
+//     source.src = dataURI;
+//     source.type = 'video/' + type;
+//     element.appendChild(source);
+// }
 
-// Add Fake sourced
-addSourceToVideo(video,'webm', base64('video/webm', 'GkXfo0AgQoaBAUL3gQFC8oEEQvOBCEKCQAR3ZWJtQoeBAkKFgQIYU4BnQI0VSalmQCgq17FAAw9CQE2AQAZ3aGFtbXlXQUAGd2hhbW15RIlACECPQAAAAAAAFlSua0AxrkAu14EBY8WBAZyBACK1nEADdW5khkAFVl9WUDglhohAA1ZQOIOBAeBABrCBCLqBCB9DtnVAIueBAKNAHIEAAIAwAQCdASoIAAgAAUAmJaQAA3AA/vz0AAA='));
-addSourceToVideo(video, 'mp4', base64('video/mp4', 'AAAAHGZ0eXBpc29tAAACAGlzb21pc28ybXA0MQAAAAhmcmVlAAAAG21kYXQAAAGzABAHAAABthADAowdbb9/AAAC6W1vb3YAAABsbXZoZAAAAAB8JbCAfCWwgAAAA+gAAAAAAAEAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAIVdHJhawAAAFx0a2hkAAAAD3wlsIB8JbCAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAIAAAACAAAAAABsW1kaWEAAAAgbWRoZAAAAAB8JbCAfCWwgAAAA+gAAAAAVcQAAAAAAC1oZGxyAAAAAAAAAAB2aWRlAAAAAAAAAAAAAAAAVmlkZW9IYW5kbGVyAAAAAVxtaW5mAAAAFHZtaGQAAAABAAAAAAAAAAAAAAAkZGluZgAAABxkcmVmAAAAAAAAAAEAAAAMdXJsIAAAAAEAAAEcc3RibAAAALhzdHNkAAAAAAAAAAEAAACobXA0dgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAIAAgASAAAAEgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABj//wAAAFJlc2RzAAAAAANEAAEABDwgEQAAAAADDUAAAAAABS0AAAGwAQAAAbWJEwAAAQAAAAEgAMSNiB9FAEQBFGMAAAGyTGF2YzUyLjg3LjQGAQIAAAAYc3R0cwAAAAAAAAABAAAAAQAAAAAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAEAAAABAAAAFHN0c3oAAAAAAAAAEwAAAAEAAAAUc3RjbwAAAAAAAAABAAAALAAAAGB1ZHRhAAAAWG1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAAK2lsc3QAAAAjqXRvbwAAABtkYXRhAAAAAQAAAABMYXZmNTIuNzguMw=='));
+// // A helper to concat base64
+// var base64 = function(mimeType, base64) {
+//     return 'data:' + mimeType + ';base64,' + base64;
+// };
 
-// Append the video to where ever you need
-document.body.appendChild(video);
+// // Add Fake sourced
+// addSourceToVideo(video,'webm', base64('video/webm', 'GkXfo0AgQoaBAUL3gQFC8oEEQvOBCEKCQAR3ZWJtQoeBAkKFgQIYU4BnQI0VSalmQCgq17FAAw9CQE2AQAZ3aGFtbXlXQUAGd2hhbW15RIlACECPQAAAAAAAFlSua0AxrkAu14EBY8WBAZyBACK1nEADdW5khkAFVl9WUDglhohAA1ZQOIOBAeBABrCBCLqBCB9DtnVAIueBAKNAHIEAAIAwAQCdASoIAAgAAUAmJaQAA3AA/vz0AAA='));
+// addSourceToVideo(video, 'mp4', base64('video/mp4', 'AAAAHGZ0eXBpc29tAAACAGlzb21pc28ybXA0MQAAAAhmcmVlAAAAG21kYXQAAAGzABAHAAABthADAowdbb9/AAAC6W1vb3YAAABsbXZoZAAAAAB8JbCAfCWwgAAAA+gAAAAAAAEAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAIVdHJhawAAAFx0a2hkAAAAD3wlsIB8JbCAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAIAAAACAAAAAABsW1kaWEAAAAgbWRoZAAAAAB8JbCAfCWwgAAAA+gAAAAAVcQAAAAAAC1oZGxyAAAAAAAAAAB2aWRlAAAAAAAAAAAAAAAAVmlkZW9IYW5kbGVyAAAAAVxtaW5mAAAAFHZtaGQAAAABAAAAAAAAAAAAAAAkZGluZgAAABxkcmVmAAAAAAAAAAEAAAAMdXJsIAAAAAEAAAEcc3RibAAAALhzdHNkAAAAAAAAAAEAAACobXA0dgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAIAAgASAAAAEgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABj//wAAAFJlc2RzAAAAAANEAAEABDwgEQAAAAADDUAAAAAABS0AAAGwAQAAAbWJEwAAAQAAAAEgAMSNiB9FAEQBFGMAAAGyTGF2YzUyLjg3LjQGAQIAAAAYc3R0cwAAAAAAAAABAAAAAQAAAAAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAEAAAABAAAAFHN0c3oAAAAAAAAAEwAAAAEAAAAUc3RjbwAAAAAAAAABAAAALAAAAGB1ZHRhAAAAWG1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAAK2lsc3QAAAAjqXRvbwAAABtkYXRhAAAAAQAAAABMYXZmNTIuNzguMw=='));
 
-// Start playing video after any user interaction.
-// NOTE: Running video.play() handler without a user action may be blocked by browser.
-var playFn = function() {
-    video.play();
-    document.body.removeEventListener('touchend', playFn);
-};
-document.body.addEventListener('touchend', playFn);
+// // Append the video to where ever you need
+// document.body.appendChild(video);
+
+// // Start playing video after any user interaction.
+// // NOTE: Running video.play() handler without a user action may be blocked by browser.
+// var playFn = function() {
+//     video.play();
+//     document.body.removeEventListener('touchend', playFn);
+// };
+// document.body.addEventListener('touchend', playFn);
