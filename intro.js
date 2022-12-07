@@ -16,6 +16,6 @@ function getPerm() {
 
 function nextPage() {
     //TEST --> change for devonkay223.github.io/QuietStanding/BackPlate.html
-    // window.location.replace('https://devonkay223.github.io/QuietStanding/BackPlate.html')
-    window.location.replace('http://127.0.0.1:8887/BackPlate.html');
+    window.location.replace('https://devonkay223.github.io/QuietStanding/BackPlate.html')
+    //window.location.replace('http://127.0.0.1:8887/BackPlate.html');
   }
