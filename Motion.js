@@ -28,7 +28,7 @@ window.onload = ()=> {
   // utilities.createContext();
 
   //TEST does this work on load???
-  audio2()
+  audio3()
   //TEST do i need motion permission on the same page or does this work?
 }
 
@@ -371,6 +371,7 @@ function audio3() {
 
   // set options for the oscillator
 //   oscillator.detune.value = 100; // value in cents
+  oscillator.frequency.setValueAtTime(250, audioCtx.currentTime); // value in hertz
   oscillator.start(0);
 
   oscillator.onended = function () {
