@@ -278,7 +278,7 @@ function audio2() {
   const maxVol = 0.2;
   const initialVol = 0;
 
-  let freqList= [120, 160, 200, 240]
+  let freqList= [120, 140, 160, 180]
   let freq= freqList[getRandomInt(4)]
   console.log("frequency: ", freq);
 
