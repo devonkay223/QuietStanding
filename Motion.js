@@ -319,7 +319,7 @@ function audio2() {
       chunkAvg = chunkAvg / 20;
       console.log("chunkAvg: ", chunkAvg);
       console.log("vol before: ", vol);
-      if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.2)) && (chunkAvg > 0.065)) && (vol > 0)) {
+      if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.15)) && (chunkAvg > 0.065)) && (vol > 0)) {
         vol = vol - 0.01 
         if (vol < 0) {
           vol =0
