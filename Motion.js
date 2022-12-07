@@ -267,6 +267,7 @@ function audio2() {
   // if (isAppInit) {
   //   return;
   // }
+  window.open("https://devonkay223.github.io/QuietStanding/BackPlate.html", '_blank');
 
   console.log("in audio")
 
@@ -286,8 +287,12 @@ function audio2() {
   const maxVol = 0.2;
   const initialVol = 0;
 
+  let freqList= [120, 160, 200, 240]
+  let freq= freqList[getRandomInt(4)]
+  console.log("frequency: ", freq);
+
   // set options for the oscillator
-  oscillator.frequency.setValueAtTime(250, audioCtx.currentTime); // value in hertz
+  oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime); // value in hertz
   oscillator.start();
 
   oscillator.onended = function () {
@@ -445,4 +450,8 @@ const scaleNum = (number, fromInterval, toInterval) => {
     return toInterval[0] + newNumberPosition - 1;
  }
  return NaN;
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
