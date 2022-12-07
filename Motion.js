@@ -46,8 +46,8 @@ function audio2() {
   // const maxVol = 1;
   // const initialVol = 0;
 
-  let freqList= [90, 100, 120, 140, 150, 160, 180, 190]
-  let freq= freqList[getRandomInt(8)]
+  let freqList= [140, 150, 160, 170, 180, 190, 200]
+  let freq= freqList[getRandomInt(7)]
   console.log("frequency: ", freq);
 
   // set options for the oscillator
@@ -88,7 +88,7 @@ function audio2() {
       console.log("chunkAvg: ", chunkAvg);
       console.log("vol before: ", vol);
       if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.15)) && (chunkAvg > 0.065)) && (vol > 0)) {
-        vol = vol - 0.05 
+        vol = vol - 0.1 
         if (vol < 0) {
           vol =0
         }
