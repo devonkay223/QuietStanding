@@ -9,7 +9,8 @@ html body{
 }
     
 h1{
-    font-size: 8rem;
+    font-size: 7rem;
+    padding: 0.2rem;
 }
 
 h2{

@@ -290,7 +290,7 @@ function audio2() {
     console.log("Your tone has now stopped playing!");
   };
 
-  gainNode.gain.value = initialVol;
+  gainNode.gain.value = 0.05;
   gainNode.gain.minValue = 0;
   gainNode.gain.maxValue = 1;
   
