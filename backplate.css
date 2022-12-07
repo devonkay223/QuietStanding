@@ -1,0 +1,13 @@
+html body{
+    background-color: #00173a; 
+    font-family: Rubik, Georgia, serif !important;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    background-repeat: no-repeat !important;
+}
+    
+h1{
+    font-size: 8rem;
+    color: #01255d; 
+}

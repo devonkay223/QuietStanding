@@ -11,7 +11,8 @@ function getPerm() {
     DeviceMotionEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') {
-          console.log("granted 1");
+          console.log("granted");
+          window.location.replace('https://devonkay223.github.io/QuietStanding/Audio.html')
         }
       })
       .catch(console.error);
@@ -22,12 +23,18 @@ function getPerm() {
 
 window.onload = ()=> {
   // genish.js
-  genish.export( window );
-
+  // genish.export( window );
   // audio context will be stored in utilities.ctx
-  utilities.createContext();
+  // utilities.createContext();
+
+  //TEST does this work on load???
+  audio2()
+  //TEST do i need motion permission on the same page or does this work?
 }
 
+function nextPage() {
+  window.location.replace('http://127.0.0.1:8887/Audio.html');
+}
 
 
 function audio() {
@@ -261,6 +268,7 @@ function audio2() {
   //   return;
   // }
 
+  console.log("in audio")
 
   // create web audio api context
   const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -279,44 +287,44 @@ function audio2() {
   const initialVol = 0;
 
   // set options for the oscillator
-//   oscillator.detune.value = 100; // value in cents
-  oscillator.start(0);
+  oscillator.frequency.setValueAtTime(250, audioCtx.currentTime); // value in hertz
+  oscillator.start();
 
   oscillator.onended = function () {
     console.log("Your tone has now stopped playing!");
   };
 
   gainNode.gain.value = initialVol;
-  gainNode.gain.minValue = initialVol;
-  gainNode.gain.maxValue = initialVol;
-
-  // Mouse pointer coordinates
+  gainNode.gain.minValue = 0;
+  gainNode.gain.maxValue = 1;
   
   let avg = 0;
 
   window.addEventListener('devicemotion', (e) => { 
-    //console.log("motion")
-    // can you change the rate of sampling on listeners?
+    //moiton in x, y, z
     x = Math.abs(parseFloat(e.acceleration.x).toFixed(3))
     y = Math.abs(parseFloat(e.acceleration.y).toFixed(3))
     z = Math.abs(parseFloat(e.acceleration.z).toFixed(3))
 
-   // console.log(x, ", ", y, ", ",z)
+    //average motion and increase chunk count
     avg = ((x+y+z)/3.00)
     chunkCount = chunkCount + 1;
     let a = chunkAvg
     chunkAvg = a + avg;
-    // console.log("count: ", chunkCount," Chunkavg: ",chunkAvg,  " avg: ", avg)
 
+    // when 20 motion samples have been collected evlauate average and index volume
+    // Decrease volume: 
+    //   the sample's avgerage is greater than the pervious average
+    //   the average is above the motion roof (0.2) or below the motion floor (0.065)
+    //   volume is already 0
+    // otherwise increase volume if less than 1 and avgerage is less than the motion roof (0.2)
     if (chunkCount==20) {
       chunkCount = 0 
       chunkAvg = chunkAvg / 20;
       console.log("chunkAvg: ", chunkAvg);
       console.log("vol before: ", vol);
       if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.2)) && (chunkAvg > 0.065)) && (vol > 0)) {
-
-        //scaled = scaleNum(Math.abs(avg)*1000, [250, 4000], [100, ])// /100
-        vol = vol - 0.01 //(0.001 * scaled)
+        vol = vol - 0.01 
         if (vol < 0) {
           vol =0
         }
@@ -325,16 +333,13 @@ function audio2() {
         gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);
         console.log("vol down: ", vol);
       } else if ((vol < 1) && (avg < 0.2)) {
-        //scaled = scaleNum(Math.abs(avg)*1000, [0, 250], [100, 0])// /100
-        // console.log("scaled: ", scaled)
-        vol = vol + 0.01  //(0.001 * scaled)
-        // gainNode.gain.value  = vol
+        vol = vol + 0.01;
         gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
         gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);
         console.log("vol up: ", vol);
       }
-      chunkAvg = 0;
+      chunkAvg = 0; // reset average for next chunk
       prevAvg = chunkAvg;
     } 
   });

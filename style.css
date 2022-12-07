@@ -1,26 +1,34 @@
-body{
-    background-color: #1f1f1f;
+html body{
+    background-color: #062c66; 
+    background-image: linear-gradient(#3e73c4, #062c66);
     font-family: Rubik, Georgia, serif !important;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    background-repeat: no-repeat !important;
 }
     
 h1{
-    color: #fbf8f8;
+    font-size: 8rem;
 }
 
 h2{
-    color: #1f1f1f
+    color: #1f1f1f;
+    font-size: 2rem;
 }
 
-.indicatorDot{
-    width: 30px;
-    height: 30px;
-    background-color: #ffab56;
-    border-radius: 50%;
-    position:fixed;
+p{
+    font-size: 3rem;
 }
 
-canvas {
-    display: block;
-    background-color: #1f1f1f;
-    font-family: Rubik, Georgia, serif !important;
-  }
+.PageText {
+    color: #fbf8f8;
+    margin-bottom: 100px;
+}
+
+.accelPermsButton {
+    font-size: 3rem;
+    border: none;
+    border-radius: 20px;
+    padding: 0, 20px;
+}
