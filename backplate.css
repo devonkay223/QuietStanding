@@ -1,13 +1,23 @@
-html body{
+html body {
     background-color: #00173a; 
     font-family: Rubik, Georgia, serif !important;
     width: 100%;
     position: relative;
     text-align: center;
     background-repeat: no-repeat !important;
+    overflow: hidden; 
 }
     
 h1{
     font-size: 8rem;
-    color: #01255d; 
+    color: #01255d;
+}
+
+.backPlateButton {
+    font-size: 1rem;
+    color: #00173a;
+    border: none;
+    border-radius: 20px;
+    padding: 0, 50px;
+    background-color:  #01255d;
 }

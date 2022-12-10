@@ -1,3 +1,5 @@
+//IGNORE not in use when backplate is not used
+
 function getPerm() {
     // feature detect
     if (typeof DeviceMotionEvent.requestPermission === 'function') {

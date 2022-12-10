@@ -3,7 +3,13 @@ var vol =0;
 var prevAvg = 1;
 var chunkCount= 0;
 var chunkAvg = 0;
-var up = 1; 
+
+//Notes from Karl
+// - high tones in, play backing tone
+// - wants a spacial mapping to explore within the space (this would be nice for having spots of amplified sound from phones)
+// - check how to do device motion on andriod 
+// - generate QR code
+
 
 function getPerm() {
     // feature detect
@@ -37,7 +43,6 @@ function audio2() {
 
   let freqList= [150, 160, 170, 180, 190, 200, 210, 220]
   let freq= freqList[getRandomInt(8)]
-  console.log("frequency: ", freq);
 
   // set options for the oscillator
   oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime); // value in hertz
@@ -67,26 +72,26 @@ function audio2() {
     //   the average is above the motion roof (0.2) or below the motion floor (0.065)
     //   volume is already 0
     // otherwise increase volume if less than 1 and avgerage is less than the motion roof (0.2)
+
     if (chunkCount==20) {
       chunkCount = 0 
       chunkAvg = chunkAvg / 20;
-      console.log("chunkAvg: ", chunkAvg);
-      console.log("vol before: ", vol);
       if ((((chunkAvg - 0.005) > prevAvg || (chunkAvg >= 0.15)) && (chunkAvg > 0.065)) && (vol > 0)) {
-        vol = vol - 0.1 
+        vol = vol - 0.1 //decrease volume 
+        //make sure volume isnt out of range
         if (vol < 0) {
           vol =0
         }
         gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
         gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);
-        console.log("vol down: ", vol);
-      } else if ((vol < 1) && (avg < 0.2)) {
-        vol = vol + 0.05;
+        gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);      
+      } 
+      else if ((vol < 1) && (avg < 0.2)) 
+      {
+        vol = vol + 0.05; //increase volume
         gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
         gainNode.gain.setValueAtTime(gainNode.gain.value , audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 1);
-        console.log("vol up: ", vol);
       }
       chunkAvg = 0; // reset average for next chunk
       prevAvg = chunkAvg;
@@ -115,6 +120,30 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+//background bass to play during
+function audio4() {
+  // create web audio api context
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = new AudioContext();
+
+  // create Oscillator and gain node
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+
+  // connect oscillator to gain node to speakers
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  // set options for the oscillator
+  oscillator.frequency.setValueAtTime(80, audioCtx.currentTime); // value in hertz
+  oscillator.start();
+
+  gainNode.gain.value = 0.5;
+  gainNode.gain.minValue = 0;
+  gainNode.gain.maxValue = 1;
+  
+  isAppInit = true;
+}
 
 //Potential Solution to screens sleeping -- not in use rn
 
